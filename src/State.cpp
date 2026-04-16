@@ -7,6 +7,10 @@ State::State()
     quitRequested(false)
 {
 }
+State::~State()
+{
+  objectArray.clear();
+}
 void State::LoadAssets()
 {
   sprite.Open("image.png");
@@ -30,6 +34,10 @@ void State::Update(float dt)
   if(SDL_QuitRequested())
   {
     quitRequested = true;
+  }
+  for (const std::unique_ptr<GameObject>& gameObject : objectArray)
+  {
+    gameObject->Update(dt);
   }
 }
 void State::Render()

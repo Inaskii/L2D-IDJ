@@ -1,5 +1,4 @@
-#include <SDL2/SDL_mixer.h>
-#include <string>
+#include "Game.h"
 
 class Music
 {
@@ -9,7 +8,7 @@ public:
   Music(std::string file);
   ~Music();
   void Play (int time = -1);
-  void Stop (int msToStop = 1500);
+  void wStop (int msToStop = 1500);
   void Open (std::string file);
   bool IsOpen();
   

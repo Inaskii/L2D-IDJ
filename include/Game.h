@@ -2,10 +2,10 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
-#include <string>
-#include <iostream>
-
-class State;
+#include <State.h>
+#include <Rect.h>
+#include <Vec2.h>
+#include <bits/stdc++.h>
 
 class Game{
 public:
