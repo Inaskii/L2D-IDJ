@@ -1,11 +1,13 @@
 #pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_mixer.h>
-#include <State.h>
-#include <Rect.h>
-#include <Vec2.h>
-#include <bits/stdc++.h>
+#define INCLUDE_SDL
+#define INCLUDE_SDL_IMAGE
+#define INCLUDE_SDL_MIXER
+#include "SDL_include.h"
+#include "includes.h"
+
+class State;
+class Rect;
+class Vec2;
 
 class Game{
 public:

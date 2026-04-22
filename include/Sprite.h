@@ -1,5 +1,7 @@
 #pragma once
-#include <string>
+#define INCLUDE_SDL_IMAGE
+#include "SDL_include.h"
+#include "includes.h"
 
 class Sprite
 {

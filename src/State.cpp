@@ -1,5 +1,10 @@
 #include "../include/State.h"
-
+#include "../include/Sprite.h"
+#include "../include/Music.h"
+#include "../include/GameObject.h"
+#include "../include/Game.h"
+#define INCLUDE_SDL
+#include "../include/SDL_include.h"
 
 State::State()
   : sprite(),
@@ -49,6 +54,6 @@ void State::Render()
 
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(renderer);
-  sprite.Render(0, 0);
+  sprite.Render(0, 0, sprite.GetWidth(), sprite.GetHeigth());
   SDL_RenderPresent(renderer);
 }

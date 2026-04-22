@@ -1,7 +1,10 @@
 #pragma once
+#include "includes.h"
 #include "Sprite.h"
 #include "Music.h"
-#include "GameObject.h"
+
+class GameObject;
+
 class State{
 public:
   State();

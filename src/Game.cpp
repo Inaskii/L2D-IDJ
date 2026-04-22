@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "../include/State.h"
 
 Game::Game(std::string title, int width, int height)
 {

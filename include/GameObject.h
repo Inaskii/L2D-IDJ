@@ -1,6 +1,10 @@
 #pragma once
-#include "Component.h"
-#include "Game.h"
+#include "includes.h"
+#include <algorithm>
+#include "Rect.h"
+
+class Component;
+class Game;
 
 class GameObject
 {
@@ -25,7 +29,7 @@ template<typename T>
 T* GameObject::GetComponent(){
 	long unsigned int index;
 	for(index=0;index<components.size();index++){
-		T* component = dynamic_cast<T*>(components[index].get());
+		T* component = dynamic_cast<T*>(components[index]);
 		if(component != nullptr){
 			return component;
 		}

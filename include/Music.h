@@ -1,4 +1,7 @@
-#include "Game.h"
+#pragma once
+#define INCLUDE_SDL_MIXER
+#include "SDL_include.h"
+#include "includes.h"
 
 class Music
 {
@@ -8,7 +11,7 @@ public:
   Music(std::string file);
   ~Music();
   void Play (int time = -1);
-  void wStop (int msToStop = 1500);
+  void Stop (int msToStop = 1500);
   void Open (std::string file);
   bool IsOpen();
   

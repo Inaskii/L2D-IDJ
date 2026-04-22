@@ -1,6 +1,5 @@
 #include "../include/GameObject.h"
-
-
+#include "../include/Component.h"
 
 GameObject::GameObject(){
   isDead=  false;
