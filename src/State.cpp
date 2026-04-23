@@ -5,7 +5,7 @@
 #include "../include/Game.h"
 #define INCLUDE_SDL
 #include "../include/SDL_include.h"
-
+#include "../include/Zombie.h"
 State::State()
   : sprite(),
     music(),
@@ -18,15 +18,17 @@ State::~State()
 }
 void State::LoadAssets()
 {
-  sprite.Open("image.png");
-  if (sprite.isOpen()) {
-    sprite.SetClip(0, 0, sprite.GetWidth(), sprite.GetHeigth());
-  }
+  sprite.Open("img/Background.png");
+  sprite.setFrame(0);
 
-  music.Open("music.wav");
-  if (music.IsOpen()) {
-    music.Play();
-  }
+  GameObject* go = new GameObject();
+  Zombie* zombie = new Zombie(*go);
+  go->AddComponent(zombie);
+  go->box.x = 600;
+  go->box.y = 450;
+
+  objectArray.emplace_back(go);
+
 }
 
 
@@ -55,5 +57,11 @@ void State::Render()
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(renderer);
   sprite.Render(0, 0, sprite.GetWidth(), sprite.GetHeigth());
+
+  for (const std::unique_ptr<GameObject>& gameObject : objectArray)
+  {
+    gameObject->Render();
+  }
+
   SDL_RenderPresent(renderer);
 }

@@ -2,7 +2,7 @@ COMPILER = g++
 RMDIR = rm -rdf
 RM = rm -f
 
-DEP_FLAGS = -M -MT $@ -MT $(BIN_PATH)/$(*F).o -MP -MF $@
+DEP_FLAGS = -M -MT $@ -MT $(BIN_PATH)/$*.o -MP -MF $@
 LIBS = -lSDL2 -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lm
 
 INC_PATHS = -I$(INC_PATH) $(addprefix -I,$(SDL_INC_PATH))
@@ -18,11 +18,10 @@ SRC_PATH = src
 BIN_PATH = bin
 DEP_PATH = dep
 
-CPP_FILES = $(wildcard $(SRC_PATH)/*.cpp)
-INC_FILES = $(wildcard $(SRC_PATH)/*.hpp)
-FILE_NAMES = $(sort $(notdir $(CPP_FILES:.cpp=)) $(notdir $(INC_FILES:.h=)))
-DEP_FILES = $(addprefix $(DEP_PATH)/,$(addsuffix .d,$(FILE_NAMES)))
-OBJ_FILES = $(addprefix $(BIN_PATH)/,$(notdir $(CPP_FILES:.cpp=.o)))
+CPP_FILES = $(shell find $(SRC_PATH) -name '*.cpp')
+REL_CPP_FILES = $(patsubst $(SRC_PATH)/%,%,$(CPP_FILES))
+DEP_FILES = $(addprefix $(DEP_PATH)/,$(REL_CPP_FILES:.cpp=.d))
+OBJ_FILES = $(addprefix $(BIN_PATH)/,$(REL_CPP_FILES:.cpp=.o))
 
 EXEC = JOGO
 
@@ -62,9 +61,11 @@ $(EXEC): $(OBJ_FILES)
 	$(COMPILER) -o $@ $^ $(LINK_PATH) $(LIBS) $(FLAGS)
 
 $(BIN_PATH)/%.o: $(DEP_PATH)/%.d | folders
-	$(COMPILER) $(INC_PATHS) $(addprefix $(SRC_PATH)/,$(notdir $(<:.d=.cpp))) -c $(FLAGS) -o $@
+	@mkdir -p $(dir $@)
+	$(COMPILER) $(INC_PATHS) $(SRC_PATH)/$*.cpp -c $(FLAGS) -o $@
 
 $(DEP_PATH)/%.d: $(SRC_PATH)/%.cpp | folders
+	@mkdir -p $(dir $@)
 	$(COMPILER) $(INC_PATHS) $< $(DEP_FLAGS) $(FLAGS)
 
 clean:
