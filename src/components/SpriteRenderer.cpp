@@ -27,8 +27,9 @@ void SpriteRenderer::Open(std::string file)
 
 void SpriteRenderer::SetFrameCount(int frameCountW, int frameCountH)
 {
-	this->frameCountW = frameCountW > 0 ? frameCountW : 1;
-	this->frameCountH = frameCountH > 0 ? frameCountH : 1;
+	if (frameCountW <= 0) frameCountW = 1;
+	if (frameCountH <= 0) frameCountH = 1;
+
 	sprite.setFrameCount(this->frameCountW, this->frameCountH);
 	SetFrame(0);
 }

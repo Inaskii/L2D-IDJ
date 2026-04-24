@@ -164,7 +164,13 @@ dep/State.d bin/State.o: src/State.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/13/bits/shared_ptr_atomic.h \
  /usr/include/c++/13/bits/atomic_base.h \
  /usr/include/c++/13/bits/atomic_lockfree_defines.h \
- /usr/include/c++/13/backward/auto_ptr.h src/../include/Sprite.h \
+ /usr/include/c++/13/backward/auto_ptr.h \
+ /usr/include/c++/13/unordered_map \
+ /usr/include/c++/13/bits/unordered_map.h \
+ /usr/include/c++/13/bits/hashtable.h \
+ /usr/include/c++/13/bits/hashtable_policy.h \
+ /usr/include/c++/13/bits/enable_special_members.h \
+ /usr/include/c++/13/bits/erase_if.h src/../include/Sprite.h \
  src/../include/SDL_include.h /usr/include/SDL2/SDL_image.h \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
  /usr/include/SDL2/SDL_stdinc.h /usr/include/SDL2/SDL_config.h \
@@ -512,6 +518,12 @@ src/../include/includes.h:
 /usr/include/c++/13/bits/atomic_base.h:
 /usr/include/c++/13/bits/atomic_lockfree_defines.h:
 /usr/include/c++/13/backward/auto_ptr.h:
+/usr/include/c++/13/unordered_map:
+/usr/include/c++/13/bits/unordered_map.h:
+/usr/include/c++/13/bits/hashtable.h:
+/usr/include/c++/13/bits/hashtable_policy.h:
+/usr/include/c++/13/bits/enable_special_members.h:
+/usr/include/c++/13/bits/erase_if.h:
 src/../include/Sprite.h:
 src/../include/SDL_include.h:
 /usr/include/SDL2/SDL_image.h:

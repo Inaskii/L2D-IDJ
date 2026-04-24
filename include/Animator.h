@@ -3,7 +3,7 @@
 #include "includes.h"
 #include "Animation.h"
 
-class Animator : Component{
+class Animator : public Component{
 public:
   Animator(GameObject& associated);
   void Update(float dt);
