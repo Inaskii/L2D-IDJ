@@ -4,8 +4,7 @@
 Sprite::Sprite(){
   texture = nullptr;
 }
-
-Sprite::Sprite(std::string file,int frameCountW, int frameCountH){
+  Sprite::Sprite(std::string file,int frameCountW, int frameCountH){
   Open(file);
 }
 Sprite::~Sprite(){

@@ -298,7 +298,13 @@ dep/Sprite.d bin/Sprite.o: src/Sprite.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/13/bits/shared_ptr_atomic.h \
  /usr/include/c++/13/bits/atomic_base.h \
  /usr/include/c++/13/bits/atomic_lockfree_defines.h \
- /usr/include/c++/13/backward/auto_ptr.h src/../include/Game.h \
+ /usr/include/c++/13/backward/auto_ptr.h \
+ /usr/include/c++/13/unordered_map \
+ /usr/include/c++/13/bits/unordered_map.h \
+ /usr/include/c++/13/bits/hashtable.h \
+ /usr/include/c++/13/bits/hashtable_policy.h \
+ /usr/include/c++/13/bits/enable_special_members.h \
+ /usr/include/c++/13/bits/erase_if.h src/../include/Game.h \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_mixer.h
 /usr/include/stdc-predef.h:
 src/../include/Sprite.h:
@@ -669,6 +675,12 @@ src/../include/includes.h:
 /usr/include/c++/13/bits/atomic_base.h:
 /usr/include/c++/13/bits/atomic_lockfree_defines.h:
 /usr/include/c++/13/backward/auto_ptr.h:
+/usr/include/c++/13/unordered_map:
+/usr/include/c++/13/bits/unordered_map.h:
+/usr/include/c++/13/bits/hashtable.h:
+/usr/include/c++/13/bits/hashtable_policy.h:
+/usr/include/c++/13/bits/enable_special_members.h:
+/usr/include/c++/13/bits/erase_if.h:
 src/../include/Game.h:
 /usr/include/SDL2/SDL.h:
 /usr/include/SDL2/SDL_mixer.h:
