@@ -12,4 +12,6 @@ private:
   int tileWidth;
   int tileHeight;
   int tileCount;
+  int rows;
+  int col;
   };
