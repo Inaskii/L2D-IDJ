@@ -20,7 +20,10 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file):
 
 }
 void TileSet::RenderTile(unsigned index, float x, float y){
-  if(!(index >=0 && index<tileCount-1)) return;
+  if(index>=(unsigned)tileCount-1){
+    printf("Erro em Tileset::rendertile");
+    return;
+  }
 
   tileSet.SetClip(col*tileWidth,rows*tileHeight,tileWidth,tileHeight);  
   tileSet.Render(x,y,tileWidth,tileHeight);

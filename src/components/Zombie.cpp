@@ -2,6 +2,7 @@
 #include "../../include/GameObject.h"
 #include "../../include/SpriteRenderer.h"
 #include "../../include/Animator.h"
+#include "../../include/Sound.h"
 
 Zombie::Zombie(GameObject& associated)
   : Component(associated),

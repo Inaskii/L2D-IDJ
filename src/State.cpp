@@ -2,6 +2,8 @@
 #include "../include/Sprite.h"
 #include "../include/Music.h"
 #include "../include/GameObject.h"
+#include "../include/TileSet.h"
+#include "../include/TileMap.h"
 #include "../include/Game.h"
 #define INCLUDE_SDL
 #include "../include/SDL_include.h"
@@ -18,16 +20,21 @@ State::~State()
 }
 void State::LoadAssets()
 {
-  sprite.Open("img/Background.png");
-  sprite.setFrame(0);
+  GameObject world;
+  TileMap tileMap(world,"../assets/map/map.txt",(new TileSet(64,64,"../assets/img/Tileset.png")));
+  world.box.x = 0; world.box.y = 0;
+  //sprite.Open("img/Background.png");
+  //sprite.setFrame(0);
 
   GameObject* go = new GameObject();
   Zombie* zombie = new Zombie(*go);
   go->AddComponent(zombie);
   go->box.x = 600;
   go->box.y = 450;
-
   objectArray.emplace_back(go);
+
+
+
 
 }
 
