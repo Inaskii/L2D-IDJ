@@ -1,5 +1,5 @@
 #include "../include/Music.h"
-
+#include "../include/Resources.h"
 
 Music::Music(){
   music = nullptr;
@@ -18,9 +18,7 @@ void Music::Stop (int msToStop){
   Mix_FadeOutMusic(msToStop);
 }
 void Music::Open (std::string file){
-  std::string path = "assets/" + file;
-  music = Mix_LoadMUS(path.c_str());
-
+  music = Resources::GetMusic(file);
 }
 bool Music::IsOpen(){
   return music != nullptr;

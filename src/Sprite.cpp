@@ -1,5 +1,7 @@
 #include "../include/Sprite.h"
 #include "../include/Game.h"
+#include "../include/Resources.h"
+
 
 Sprite::Sprite(){
   texture = nullptr;
@@ -8,17 +10,10 @@ Sprite::Sprite(){
   Open(file);
 }
 Sprite::~Sprite(){
-  SDL_DestroyTexture(texture);
+  return;
 }
 void Sprite::Open(std::string file){
-  std::string path = "assets/" + file;
-  texture = IMG_LoadTexture(Game::GetInstance().GetRenderer(), path.c_str());
-  if(texture == nullptr)
-  {
-    std::cout << SDL_GetError()<<"\n";
-    std::cout<<"Erro ao carregar sprite : "<< file<<"\n";
-    return;
-  }
+  texture = Resources::GetImage(file);
   SDL_QueryTexture(texture, nullptr, nullptr, &width,&height);
 }
 void Sprite::SetClip(int x, int y, int w, int h){

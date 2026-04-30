@@ -5,6 +5,7 @@
 TileSet::TileSet(int tileWidth, int tileHeight, std::string file):
   tileSet(file,1,1)
 {
+  std::cout<<"TileSetCarregar Start\n";
   this->tileWidth = tileWidth;
   this->tileHeight = tileHeight;
 
@@ -18,15 +19,19 @@ TileSet::TileSet(int tileWidth, int tileHeight, std::string file):
   tileCount = rows * col;
   
 
+  std::cout<<"TileSetCarregar End\n";
 }
 void TileSet::RenderTile(unsigned index, float x, float y){
-  if(index>=(unsigned)tileCount-1){
-    printf("Erro em Tileset::rendertile");
+  if(index >= (unsigned)tileCount){
+    std::cout<<"Erro em Tileset::rendertile, index = " << index <<"\n";
     return;
   }
 
-  tileSet.SetClip(col*tileWidth,rows*tileHeight,tileWidth,tileHeight);  
-  tileSet.Render(x,y,tileWidth,tileHeight);
+  int tilesPerRow = col;
+  int rowIndex = index / tilesPerRow;
+  int colIndex = index % tilesPerRow;
+  tileSet.SetClip(colIndex * tileWidth, rowIndex * tileHeight, tileWidth, tileHeight);
+  tileSet.Render(x, y, tileWidth, tileHeight);
 }
 int TileSet::GetTileWidth(){
   return tileWidth;

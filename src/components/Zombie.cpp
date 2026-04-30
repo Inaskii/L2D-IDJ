@@ -2,13 +2,14 @@
 #include "../../include/GameObject.h"
 #include "../../include/SpriteRenderer.h"
 #include "../../include/Animator.h"
-#include "../../include/Sound.h"
 
 Zombie::Zombie(GameObject& associated)
   : Component(associated),
-    hitpoints(100)
-{
-  SpriteRenderer* spriteRenderer = new SpriteRenderer(associated, "img/Enemy.png", 3, 2);
+    hitpoints(100),
+    sound("Dead.wav")
+  {
+
+  SpriteRenderer* spriteRenderer = new SpriteRenderer(associated, "Enemy.png", 3, 2);
   associated.AddComponent(spriteRenderer);
   Animator* animator = new Animator(associated);
   associated.AddComponent(animator);
@@ -26,10 +27,13 @@ void Zombie::Damage(int damage)
 void Zombie::Update(float dt)
 {
   Damage(1); 
-  if(hitpoints<=0) associated.GetComponent<Animator>()->SetAnimation("dead");
+  if(hitpoints<=0) Die();
 
 }
-
+void Zombie::Die(){
+  associated.GetComponent<Animator>()->SetAnimation("dead");
+  sound.Play(1);
+}
 void Zombie::Render()
 {
 }

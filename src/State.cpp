@@ -20,22 +20,34 @@ State::~State()
 }
 void State::LoadAssets()
 {
-  GameObject world;
-  TileMap tileMap(world,"../assets/map/map.txt",(new TileSet(64,64,"../assets/img/Tileset.png")));
-  world.box.x = 0; world.box.y = 0;
-  //sprite.Open("img/Background.png");
-  //sprite.setFrame(0);
+  std::cout<<"LoaAssets start\n";
+  GameObject* world = new GameObject();
+  TileSet* tileSet = new TileSet(64,64,"Tileset.png");
+  TileMap* tileMap = new TileMap(*world,"assets/map/map.txt",tileSet);
+  std::cout<<"a ";
+  world->AddComponent(tileMap); 
+  std::cout<<"b "; 
+  world->box.x = 0; world->box.y = 0;
+  objectArray.emplace_back(world); 
 
-  GameObject* go = new GameObject();
-  Zombie* zombie = new Zombie(*go);
-  go->AddComponent(zombie);
-  go->box.x = 600;
-  go->box.y = 450;
-  objectArray.emplace_back(go);
+  GameObject* zombie = new GameObject();
+  Zombie* z = new Zombie(*zombie);
+  zombie->AddComponent(z);
+  zombie->box.x = 600;
+  zombie->box.y = 450;
+  objectArray.emplace_back(zombie);
+
+  GameObject* zombie2 = new GameObject();
+  Zombie* z2 = new Zombie(*zombie2);
+  zombie2->AddComponent(z2);
+  zombie2->box.x = 300;
+  zombie2->box.y = 450;
+  objectArray.emplace_back(zombie2);
 
 
 
 
+  std::cout<<"LoaAssets end\n";
 }
 
 

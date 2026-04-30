@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "../include/Resources.h"
 
 int main(int argc, char** argv)
 {
@@ -6,5 +7,8 @@ int main(int argc, char** argv)
   Game& game = Game::GetInstance();
   std::cout<<"Jogo iniciado\n";
   game.Run();
+  Resources::ClearImages();
+  Resources::ClearMusics();
+  Resources::ClearSounds();
   return 0;
 }
