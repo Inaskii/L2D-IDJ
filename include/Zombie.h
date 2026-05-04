@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "includes.h"
 #include "Sound.h"
+#include "Timer.h"
 
 
 
@@ -14,5 +15,7 @@ public:
   void Die();
 private:
   Sound sound;
+  bool hit;
   int hitpoints;
+  Timer hitTimer;
 };

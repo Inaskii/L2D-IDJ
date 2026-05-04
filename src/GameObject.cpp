@@ -14,7 +14,7 @@ void GameObject::Update(float dt){
   for(Component *Component:components)
   {
     Component->Update(dt);
-  }
+  }     
 }
 void GameObject::Render(){
   for(Component *Component:components){

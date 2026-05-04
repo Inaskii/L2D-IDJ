@@ -319,7 +319,7 @@ dep/State.d bin/State.o: src/State.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/13/bits/uniform_int_dist.h src/../include/Rect.h \
  src/../include/Vec2.h src/../include/TileSet.h src/../include/TileMap.h \
  src/../include/Component.h src/../include/SDL_include.h \
- src/../include/Zombie.h src/../include/Sound.h
+ src/../include/Zombie.h src/../include/Sound.h src/../include/Timer.h
 /usr/include/stdc-predef.h:
 src/../include/State.h:
 src/../include/includes.h:
@@ -720,3 +720,4 @@ src/../include/Component.h:
 src/../include/SDL_include.h:
 src/../include/Zombie.h:
 src/../include/Sound.h:
+src/../include/Timer.h:

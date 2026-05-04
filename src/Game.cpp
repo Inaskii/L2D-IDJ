@@ -39,15 +39,9 @@ Game::~Game()
   SDL_Quit();
 }
 
-State& Game::GetState()
-{
-  return *state;
-}
-
-SDL_Renderer* Game::GetRenderer()
-{
-  return renderer;
-}
+State& Game::GetState(){return *state;}
+float Game::GetDeltaTime(){return dt;}
+SDL_Renderer* Game::GetRenderer(){return renderer;}
 
 Game& Game::GetInstance()
 {
@@ -67,4 +61,12 @@ void Game::Run()
     state->Render();
 
   }
+}
+void Game::CalculateDeltaTime()
+{
+  //framestart -> valor antigo
+  Uint32 currentFrame = SDL_GetTicks(); //atual
+  dt = currentFrame - frameStart;
+  frameStart = currentFrame;
+
 }
