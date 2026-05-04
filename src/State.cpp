@@ -4,10 +4,10 @@
 #include "../include/GameObject.h"
 #include "../include/TileSet.h"
 #include "../include/TileMap.h"
-#include "../include/Game.h"
 #define INCLUDE_SDL
 #include "../include/SDL_include.h"
 #include "../include/Zombie.h"
+
 State::State()
   : sprite(),
     music(),
@@ -30,21 +30,6 @@ void State::LoadAssets()
   world->box.x = 0; world->box.y = 0;
   objectArray.emplace_back(world); 
 
-  GameObject* zombie = new GameObject();
-  Zombie* z = new Zombie(*zombie);
-  zombie->AddComponent(z);
-  zombie->box.x = 600;
-  zombie->box.y = 450;
-  objectArray.emplace_back(zombie);
-
-  GameObject* zombie2 = new GameObject();
-  Zombie* z2 = new Zombie(*zombie2);
-  zombie2->AddComponent(z2);
-  zombie2->box.x = 300;
-  zombie2->box.y = 450;
-  objectArray.emplace_back(zombie2);
-
-
 
 
   std::cout<<"LoaAssets end\n";
@@ -57,14 +42,19 @@ bool State::QuitRequested()
 }
 void State::Update(float dt)
 {
-  if(SDL_QuitRequested())
-  {
+
+  if(SDL_QuitRequested() or InputManager::GetInstance().QuitRequested() or InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
     quitRequested = true;
   }
+  if(InputManager::GetInstance().KeyPress(SPACE_KEY)) SpawnZombie(InputManager::GetInstance::GetMouseX(),InputManager::GetMouseY());
   for (const std::unique_ptr<GameObject>& gameObject : objectArray)
   {
     gameObject->Update(dt);
   }
+}
+void SpawnZombie(int x,int y)
+{
+  
 }
 void State::Render()
 {

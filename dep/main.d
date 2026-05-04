@@ -309,7 +309,9 @@ dep/main.d bin/main.o: src/main.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/13/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
- /usr/include/c++/13/bits/fstream.tcc src/../include/Resources.h
+ /usr/include/c++/13/bits/fstream.tcc src/../include/InputManager.h \
+ src/../include/State.h src/../include/Sprite.h src/../include/Music.h \
+ src/../include/Resources.h
 /usr/include/stdc-predef.h:
 src/../include/Game.h:
 src/../include/SDL_include.h:
@@ -692,4 +694,8 @@ src/../include/includes.h:
 /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h:
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
 /usr/include/c++/13/bits/fstream.tcc:
+src/../include/InputManager.h:
+src/../include/State.h:
+src/../include/Sprite.h:
+src/../include/Music.h:
 src/../include/Resources.h:

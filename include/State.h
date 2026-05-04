@@ -2,6 +2,7 @@
 #include "includes.h"
 #include "Sprite.h"
 #include "Music.h"
+#include "Game.h"
 
 class GameObject;
 

@@ -310,15 +310,16 @@ dep/State.d bin/State.o: src/State.cpp /usr/include/stdc-predef.h \
  /usr/include/SDL2/SDL_system.h /usr/include/SDL2/SDL_timer.h \
  /usr/include/SDL2/SDL_version.h /usr/include/SDL2/SDL_locale.h \
  /usr/include/SDL2/SDL_misc.h src/../include/Music.h \
- /usr/include/SDL2/SDL_mixer.h src/../include/GameObject.h \
- /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
+ /usr/include/SDL2/SDL_mixer.h src/../include/Game.h \
+ /usr/include/SDL2/SDL.h src/../include/InputManager.h \
+ src/../include/GameObject.h /usr/include/c++/13/algorithm \
+ /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
  /usr/include/c++/13/bits/stl_heap.h \
  /usr/include/c++/13/bits/uniform_int_dist.h src/../include/Rect.h \
  src/../include/Vec2.h src/../include/TileSet.h src/../include/TileMap.h \
- src/../include/Component.h src/../include/Game.h /usr/include/SDL2/SDL.h \
- src/../include/SDL_include.h src/../include/Zombie.h \
- src/../include/Sound.h
+ src/../include/Component.h src/../include/SDL_include.h \
+ src/../include/Zombie.h src/../include/Sound.h
 /usr/include/stdc-predef.h:
 src/../include/State.h:
 src/../include/includes.h:
@@ -702,6 +703,9 @@ src/../include/SDL_include.h:
 /usr/include/SDL2/SDL_misc.h:
 src/../include/Music.h:
 /usr/include/SDL2/SDL_mixer.h:
+src/../include/Game.h:
+/usr/include/SDL2/SDL.h:
+src/../include/InputManager.h:
 src/../include/GameObject.h:
 /usr/include/c++/13/algorithm:
 /usr/include/c++/13/bits/stl_algo.h:
@@ -713,8 +717,6 @@ src/../include/Vec2.h:
 src/../include/TileSet.h:
 src/../include/TileMap.h:
 src/../include/Component.h:
-src/../include/Game.h:
-/usr/include/SDL2/SDL.h:
 src/../include/SDL_include.h:
 src/../include/Zombie.h:
 src/../include/Sound.h:

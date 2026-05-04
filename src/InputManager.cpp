@@ -1,7 +1,6 @@
 #include "../include/InputManager.h"
 #define INCLUDE_SDL
 #include "../include/SDL_include.h"
-
 InputManager& InputManager::GetInstance() {
   static InputManager instance;
   return instance;
@@ -54,17 +53,17 @@ void InputManager::Update()
   }
 }
 bool InputManager::KeyPress(int key){
-  if(keyState[key] && keyUpdate[key] == updateCounter) return true;}
+  return (keyState[key] && keyUpdate[key] == updateCounter);}
 bool InputManager::KeyRelease(int key){
-  if(!keyState[key] && keyUpdate[key] == updateCounter) return true;}
+  return(!keyState[key] && keyUpdate[key] == updateCounter);}
 bool InputManager::IsKeyDown(int key){
-  if(keyState[key]) return true;}
+  return(keyState[key]);}
 bool InputManager::MousePress(int button){
-  if(mouseState[button] && mouseUpdate[button] == updateCounter) return true;}
+  return(mouseState[button] && mouseUpdate[button] == updateCounter);}
 bool InputManager::MouseRelease(int button){
-  if(!mouseState[button] && mouseState[button] == updateCounter) return true;}
+  return(!mouseState[button] && mouseState[button] == updateCounter);}
 bool InputManager::IsMouseDown(int button){
-  if(mouseState[button]) return true;}
+  return(mouseState[button]);}
 
 int InputManager::GetMouseX(){return mouseX;}
 int InputManager::GetMouseY(){return mouseY;}

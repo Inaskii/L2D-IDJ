@@ -1,5 +1,4 @@
 #include "../include/Game.h"
-#include "../include/State.h"
 
 Game::Game(std::string title, int width, int height)
 {
@@ -63,6 +62,7 @@ void Game::Run()
   while(!state->QuitRequested())
   {
     SDL_Delay(33);
+    InputManager::GetInstance().Update();
     state->Update(33);
     state->Render();
 
