@@ -22,6 +22,10 @@ Game::Game(std::string title, int width, int height)
     std::cout<< "Deu erro 2\n";
     std::cout << SDL_GetError()<<"\n";
   }
+
+  frameStart = SDL_GetTicks();
+  dt = 0.0f;
+
   std::cout <<"Chegamos aqui\n";
   state = new State();
   std::cout<<"Aqui\n";
@@ -55,18 +59,19 @@ void Game::Run()
   state->LoadAssets();
   while(!state->QuitRequested())
   {
-    SDL_Delay(33);
+    CalculateDeltaTime();
+
     InputManager::GetInstance().Update();
-    state->Update(33);
+    state->Update(dt);
     state->Render();
 
+    SDL_Delay(33);
   }
 }
+
 void Game::CalculateDeltaTime()
 {
-  //framestart -> valor antigo
-  Uint32 currentFrame = SDL_GetTicks(); //atual
-  dt = currentFrame - frameStart;
+  Uint32 currentFrame = SDL_GetTicks();
+  dt = (currentFrame - frameStart) / 1000.0f; 
   frameStart = currentFrame;
-
 }

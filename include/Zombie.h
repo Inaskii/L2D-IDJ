@@ -14,8 +14,10 @@ public:
   void Render();
   void Die();
 private:
-  Sound sound;
+  Sound hitSound,deathSound;
   bool hit;
+  bool dead;
   int hitpoints;
   Timer hitTimer;
+  Timer deathTimer;
 };

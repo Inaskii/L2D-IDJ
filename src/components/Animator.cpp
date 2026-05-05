@@ -2,7 +2,6 @@
 #include "../../include/GameObject.h"
 #include "../../include/SpriteRenderer.h"
 
-#include <iostream>
 Animator::Animator(GameObject& associated)  : Component(associated),
     frameEnd(0),
     frameStart(0),
@@ -13,10 +12,11 @@ Animator::Animator(GameObject& associated)  : Component(associated),
   
 }
 void Animator::Update(float dt){
-  if(frameTime ==0) return;
-  timeElapsed++;
+  if(frameTime == 0) return;
+
+  timeElapsed += dt;
   bool change = false;
-  if(timeElapsed>frameTime)
+  while(timeElapsed > frameTime)
   {
     currentFrame++;
     change = true;

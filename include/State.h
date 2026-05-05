@@ -16,6 +16,8 @@ public:
   void Update(float dt);
   void Render();
 
+  void SpawnZombie(int x, int y);
+
 private:
   Sprite sprite;
   Music music;

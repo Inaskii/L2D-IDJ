@@ -4,6 +4,7 @@
 #include "../include/GameObject.h"
 #include "../include/TileSet.h"
 #include "../include/TileMap.h"
+#include "../include/InputManager.h"
 #define INCLUDE_SDL
 #include "../include/SDL_include.h"
 #include "../include/Zombie.h"
@@ -43,19 +44,41 @@ bool State::QuitRequested()
 void State::Update(float dt)
 {
 
-  if(SDL_QuitRequested() or InputManager::GetInstance().QuitRequested() or InputManager::GetInstance().KeyPress(ESCAPE_KEY)){
+  if (InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
     quitRequested = true;
   }
-  if(InputManager::GetInstance().KeyPress(SPACE_KEY)) SpawnZombie(InputManager::GetInstance::GetMouseX(),InputManager::GetMouseY());
+
+  if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
+    SpawnZombie(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
+  }
+
   for (const std::unique_ptr<GameObject>& gameObject : objectArray)
   {
     gameObject->Update(dt);
   }
+  for(int i =0;i<objectArray.size();i++)
+  {
+    if(objectArray[i]->IsDead())
+    {
+      objectArray.erase(objectArray.begin()+i);
+      i--;
+    }
+  }
 }
-void SpawnZombie(int x,int y)
+
+void State::SpawnZombie(int x, int y)
 {
-  
+  GameObject* zombieGO = new GameObject();
+
+  zombieGO->box.x = x;
+  zombieGO->box.y = y;
+
+  Zombie* zombie = new Zombie(*zombieGO);
+  zombieGO->AddComponent(zombie);
+
+  objectArray.emplace_back(zombieGO);
 }
+
 void State::Render()
 {
   SDL_Renderer* renderer = Game::GetInstance().GetRenderer();
