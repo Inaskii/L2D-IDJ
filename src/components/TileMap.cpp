@@ -32,6 +32,7 @@ void TileMap::Load(const std::string& fileName){
 	std::cout<<"Tilemap carregar end\n";
 	
 }
+void TileMap::Start(){}
 void TileMap::SetTileSet(TileSet* tileSet){
     this->tileSet.reset(tileSet);
 }

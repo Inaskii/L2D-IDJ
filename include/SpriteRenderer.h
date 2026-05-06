@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Sprite.h"
-#include <string>
+#include "includes.h"
 
 class SpriteRenderer : public Component {
 public:
@@ -10,10 +10,11 @@ public:
 
   void Open(std::string file);
   void SetFrameCount(int frameCountW, int frameCountH);
+  void Start();
   void Update(float dt) override;
   void Render() override;
   void SetFrame(int frame);
-
+  void SetCameraFollower(bool b);
 private:
   Sprite sprite;
   int frameCountW;

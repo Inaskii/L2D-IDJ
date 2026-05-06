@@ -12,6 +12,7 @@ public:
     void SetTileSet(TileSet* tileSet);
     int& At(int x, int y, int z = 0);
     void Render();
+    void Start();
     void Update(float dt);
     void RenderLayer(int layer);
     int GetWidth();

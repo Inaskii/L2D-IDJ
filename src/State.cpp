@@ -5,13 +5,13 @@
 #include "../include/TileSet.h"
 #include "../include/TileMap.h"
 #include "../include/InputManager.h"
+#include "../include/SpriteRenderer.h"
 #define INCLUDE_SDL
-#include "../include/SDL_include.h"
-#include "../include/Zombie.h"
 
 State::State()
   : sprite(),
     music(),
+    started(false),
     quitRequested(false)
 {
 }
@@ -19,15 +19,33 @@ State::~State()
 {
   objectArray.clear();
 }
+
+void State::Start()
+{
+  LoadAssets();
+  for(auto ptr: objectArray)
+  {
+    ptr->Start();
+  }
+
+
+
+  started = true;
+}
+
 void State::LoadAssets()
 {
   std::cout<<"LoaAssets start\n";
   GameObject* world = new GameObject();
+
+  sprite.Open("Background.png");
+  sprite.setFrame(0);
+  sprite.cameraFollower = 1;
+
   TileSet* tileSet = new TileSet(64,64,"Tileset.png");
   TileMap* tileMap = new TileMap(*world,"assets/map/map.txt",tileSet);
-  std::cout<<"a ";
+  
   world->AddComponent(tileMap); 
-  std::cout<<"b "; 
   world->box.x = 0; world->box.y = 0;
   objectArray.emplace_back(world); 
 
@@ -41,8 +59,9 @@ bool State::QuitRequested()
 {
   return quitRequested;
 }
-void State::Update(float dt)
-{
+void State::Update(float dt){
+  Camera::Update(dt);
+
 
   if (InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
     quitRequested = true;
@@ -52,7 +71,7 @@ void State::Update(float dt)
     SpawnZombie(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
   }
 
-  for (const std::unique_ptr<GameObject>& gameObject : objectArray)
+  for (const std::shared_ptr<GameObject>& gameObject : objectArray)
   {
     gameObject->Update(dt);
   }
@@ -90,7 +109,7 @@ void State::Render()
   SDL_RenderClear(renderer);
   sprite.Render(0, 0, sprite.GetWidth(), sprite.GetHeigth());
 
-  for (const std::unique_ptr<GameObject>& gameObject : objectArray)
+  for (const std::shared_ptr<GameObject>& gameObject : objectArray)
   {
     gameObject->Render();
   }

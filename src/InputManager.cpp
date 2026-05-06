@@ -65,8 +65,8 @@ bool InputManager::MouseRelease(int button){
 bool InputManager::IsMouseDown(int button){
   return(mouseState[button]);}
 
-int InputManager::GetMouseX(){return mouseX;}
-int InputManager::GetMouseY(){return mouseY;}
+int InputManager::GetMouseX(){return mouseX+Camera::pos.x;}
+int InputManager::GetMouseY(){return mouseY+Camera::pos.y;}
 bool InputManager::QuitRequested(){return quitRequested;}
 
 InputManager::InputManager(){

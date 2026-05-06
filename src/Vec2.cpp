@@ -1,6 +1,5 @@
 #include "../include/Vec2.h"
 
-#include <cmath>
 
 Vec2::Vec2() {
 	x = 0;
@@ -41,6 +40,17 @@ Vec2& Vec2::operator=(const Vec2& v) {
 	return *this;
 }
 
+Vec2& Vec2::operator=(std::initializer_list<float> list) {
+    auto it = list.begin();
+
+    if (list.size() >= 2) {
+        x = *it++;
+        y = *it;
+    }
+
+    return *this;
+}//para poder fazer Vec2 vec = {0,0}
+
 float Vec2::magnitude() const {
 	return std::sqrt(x * x + y * y);
 }
@@ -61,7 +71,6 @@ Vec2 Vec2::rotated(float angle) const {
 	float cosTheta = std::cos(angle);
 	float sinTheta = std::sin(angle);
 
-	// For screen coordinates (y positive downward), positive angles rotate clockwise.
 	return Vec2(
 		x * cosTheta - y * sinTheta,
 		y * cosTheta + x * sinTheta

@@ -8,3 +8,5 @@ Component::Component(GameObject &associated)
 Component::~Component()
 {
 }
+
+

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "includes.h"
 
 class Vec2{
   public:
@@ -8,13 +8,14 @@ class Vec2{
 
     Vec2();
     Vec2(float x, float y);
-    // Operadores
+    
     Vec2 operator+(const Vec2& v) const;
     Vec2 operator-(const Vec2& v) const;
     Vec2 operator*(const float f) const;
     Vec2 operator/(const float f) const;
     bool operator==(const Vec2& v) const;
     Vec2& operator=(const Vec2& v);
+    Vec2& operator=(std::initializer_list<float> list);
 
     float magnitude() const;
     Vec2 normalized() const;

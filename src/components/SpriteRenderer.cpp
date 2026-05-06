@@ -18,11 +18,13 @@ SpriteRenderer::SpriteRenderer(GameObject &associated, std::string file, int fra
 {
 	Open(file);
 }
+void SpriteRenderer::Start(){}
 
 void SpriteRenderer::Open(std::string file)
 {
 	sprite.Open(file);
 	SetFrame(0);
+	if(!sprite.isOpen()) std::cout<<"Erro ao abrir " << file<<std::endl;
 }
 
 void SpriteRenderer::SetFrameCount(int frameCountW, int frameCountH)
@@ -74,4 +76,8 @@ void SpriteRenderer::SetFrame(int frame)
 
 	associated.box.w = frameWidth;
 	associated.box.h = frameHeight;
+}
+void SpriteRenderer::SetCameraFollower(bool b)
+{
+	sprite.cameraFollower = b;
 }

@@ -309,8 +309,18 @@ dep/Game.d bin/Game.o: src/Game.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/13/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
- /usr/include/c++/13/bits/fstream.tcc src/../include/InputManager.h \
- src/../include/State.h src/../include/Sprite.h src/../include/Music.h
+ /usr/include/c++/13/bits/fstream.tcc /usr/include/c++/13/queue \
+ /usr/include/c++/13/deque /usr/include/c++/13/bits/stl_deque.h \
+ /usr/include/c++/13/bits/deque.tcc /usr/include/c++/13/bits/stl_heap.h \
+ /usr/include/c++/13/bits/stl_queue.h src/../include/InputManager.h \
+ src/../include/Camera.h src/../include/Vec2.h \
+ src/../include/GameObject.h /usr/include/c++/13/algorithm \
+ /usr/include/c++/13/bits/stl_algo.h \
+ /usr/include/c++/13/bits/algorithmfwd.h \
+ /usr/include/c++/13/bits/uniform_int_dist.h src/../include/Rect.h \
+ src/../include/State.h src/../include/Sprite.h src/../include/Music.h \
+ src/../include/Zombie.h src/../include/Component.h \
+ src/../include/Sound.h src/../include/Timer.h
 /usr/include/stdc-predef.h:
 src/../include/Game.h:
 src/../include/SDL_include.h:
@@ -693,7 +703,25 @@ src/../include/includes.h:
 /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h:
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
 /usr/include/c++/13/bits/fstream.tcc:
+/usr/include/c++/13/queue:
+/usr/include/c++/13/deque:
+/usr/include/c++/13/bits/stl_deque.h:
+/usr/include/c++/13/bits/deque.tcc:
+/usr/include/c++/13/bits/stl_heap.h:
+/usr/include/c++/13/bits/stl_queue.h:
 src/../include/InputManager.h:
+src/../include/Camera.h:
+src/../include/Vec2.h:
+src/../include/GameObject.h:
+/usr/include/c++/13/algorithm:
+/usr/include/c++/13/bits/stl_algo.h:
+/usr/include/c++/13/bits/algorithmfwd.h:
+/usr/include/c++/13/bits/uniform_int_dist.h:
+src/../include/Rect.h:
 src/../include/State.h:
 src/../include/Sprite.h:
 src/../include/Music.h:
+src/../include/Zombie.h:
+src/../include/Component.h:
+src/../include/Sound.h:
+src/../include/Timer.h:

@@ -6,7 +6,8 @@
 Sprite::Sprite(){
   texture = nullptr;
 }
-  Sprite::Sprite(std::string file,int frameCountW, int frameCountH){
+  Sprite::Sprite(std::string file,int frameCountW, int frameCountH):
+  cameraFollower(false){
   Open(file);
 }
 Sprite::~Sprite(){
@@ -14,7 +15,15 @@ Sprite::~Sprite(){
 }
 void Sprite::Open(std::string file){
   texture = Resources::GetImage(file);
-  SDL_QueryTexture(texture, nullptr, nullptr, &width,&height);
+  if(!isOpen()){
+    std::cout << "Erro ao abrir " << file << std::endl;
+    width = 0;
+    height = 0;
+    clipRect.x = clipRect.y = clipRect.w = clipRect.h = 0;
+    return;
+  }
+  SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+  SetClip(0, 0, width, height);
 }
 void Sprite::SetClip(int x, int y, int w, int h){
   clipRect.x = x;
@@ -23,6 +32,8 @@ void Sprite::SetClip(int x, int y, int w, int h){
   clipRect.h = h;
 }
 void Sprite::Render(int x, int y, int w, int h){
+  if(!cameraFollower) {x-=Camera::pos.x, y-=Camera::pos.y;}
+
   SDL_Rect temp;
   temp.x = x;
   temp.y = y;

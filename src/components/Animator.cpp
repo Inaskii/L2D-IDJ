@@ -11,6 +11,8 @@ Animator::Animator(GameObject& associated)  : Component(associated),
 {
   
 }
+
+void Animator::Start(){}
 void Animator::Update(float dt){
   if(frameTime == 0) return;
 

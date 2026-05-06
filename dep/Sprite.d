@@ -308,10 +308,19 @@ dep/Sprite.d bin/Sprite.o: src/Sprite.cpp /usr/include/stdc-predef.h \
  /usr/include/c++/13/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h \
- /usr/include/c++/13/bits/fstream.tcc src/../include/Game.h \
+ /usr/include/c++/13/bits/fstream.tcc /usr/include/c++/13/queue \
+ /usr/include/c++/13/deque /usr/include/c++/13/bits/stl_deque.h \
+ /usr/include/c++/13/bits/deque.tcc /usr/include/c++/13/bits/stl_heap.h \
+ /usr/include/c++/13/bits/stl_queue.h src/../include/Camera.h \
+ src/../include/Vec2.h src/../include/GameObject.h \
+ /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
+ /usr/include/c++/13/bits/algorithmfwd.h \
+ /usr/include/c++/13/bits/uniform_int_dist.h src/../include/Rect.h \
+ src/../include/InputManager.h src/../include/Game.h \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_mixer.h \
- src/../include/InputManager.h src/../include/State.h \
- src/../include/Music.h src/../include/Resources.h
+ src/../include/State.h src/../include/Music.h src/../include/Zombie.h \
+ src/../include/Component.h src/../include/Sound.h src/../include/Timer.h \
+ src/../include/Resources.h
 /usr/include/stdc-predef.h:
 src/../include/Sprite.h:
 src/../include/SDL_include.h:
@@ -692,10 +701,28 @@ src/../include/includes.h:
 /usr/include/x86_64-linux-gnu/c++/13/bits/basic_file.h:
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
 /usr/include/c++/13/bits/fstream.tcc:
+/usr/include/c++/13/queue:
+/usr/include/c++/13/deque:
+/usr/include/c++/13/bits/stl_deque.h:
+/usr/include/c++/13/bits/deque.tcc:
+/usr/include/c++/13/bits/stl_heap.h:
+/usr/include/c++/13/bits/stl_queue.h:
+src/../include/Camera.h:
+src/../include/Vec2.h:
+src/../include/GameObject.h:
+/usr/include/c++/13/algorithm:
+/usr/include/c++/13/bits/stl_algo.h:
+/usr/include/c++/13/bits/algorithmfwd.h:
+/usr/include/c++/13/bits/uniform_int_dist.h:
+src/../include/Rect.h:
+src/../include/InputManager.h:
 src/../include/Game.h:
 /usr/include/SDL2/SDL.h:
 /usr/include/SDL2/SDL_mixer.h:
-src/../include/InputManager.h:
 src/../include/State.h:
 src/../include/Music.h:
+src/../include/Zombie.h:
+src/../include/Component.h:
+src/../include/Sound.h:
+src/../include/Timer.h:
 src/../include/Resources.h:

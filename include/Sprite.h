@@ -2,6 +2,7 @@
 #define INCLUDE_SDL_IMAGE
 #include "SDL_include.h"
 #include "includes.h"
+#include "Camera.h"
 
 class Sprite
 {
@@ -17,7 +18,7 @@ public:
   bool isOpen();
   void setFrame(int frame);
   void setFrameCount(int frameCountW, int frameCountH);
-
+  bool cameraFollower;
   private:
   SDL_Texture* texture;
   int width, height;

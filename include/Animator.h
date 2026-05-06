@@ -6,6 +6,7 @@
 class Animator : public Component{
 public:
   Animator(GameObject& associated);
+  void Start();
   void Update(float dt);
   void Render();
   void SetAnimation(std::string name);

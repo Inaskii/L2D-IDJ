@@ -23,7 +23,7 @@ Zombie::Zombie(GameObject& associated)
   animator->AddAnimation("hit",Animation(4,4,0));
   animator->SetAnimation("walking"); 
 }
-
+void Zombie::Start(){}
 void Zombie::Damage(int damage)
 {
   if (dead) return;

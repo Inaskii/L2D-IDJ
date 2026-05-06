@@ -1,6 +1,7 @@
 #pragma once
 
 #include "includes.h"
+#include "Camera.h"
 
 #define LEFT_ARROW_KEY SDLK_LEFT
 #define RIGHT_ARROW_KEY SDLK_RIGHT

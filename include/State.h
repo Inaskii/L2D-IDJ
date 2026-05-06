@@ -3,6 +3,9 @@
 #include "Sprite.h"
 #include "Music.h"
 #include "Game.h"
+#include "SDL_include.h"
+#include "Camera.h"
+#include "Zombie.h"
 
 class GameObject;
 
@@ -10,17 +13,21 @@ class State{
 public:
   State();
   ~State();
-  void AddObject(GameObject go);
+  std::weak_ptr<GameObject> AddObject(GameObject go);
+  std::weak_ptr<GameObject> GetObjectPtr(GameObject go);
   bool QuitRequested();
   void LoadAssets();
+  
+  void Start();
   void Update(float dt);
   void Render();
 
   void SpawnZombie(int x, int y);
 
 private:
+  bool started; 
   Sprite sprite;
   Music music;
   bool quitRequested;
-  std::vector<std::unique_ptr<GameObject>> objectArray;
+  std::vector<std::shared_ptr<GameObject>> objectArray;
 };

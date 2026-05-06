@@ -56,7 +56,7 @@ Game& Game::GetInstance()
 void Game::Run()
 {
   std::cout<<"Jogo aberto\n";
-  state->LoadAssets();
+  state->Start();
   while(!state->QuitRequested())
   {
     CalculateDeltaTime();
