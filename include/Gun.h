@@ -2,8 +2,8 @@
 #include "Sound.h"
 class Gun: Component{
 public:
-  Gun::Gun(GameObject& associated, std::weak_ptr< GameObject>character);
-  void Gun::Update(float dt);
+  Gun(GameObject& associated, std::weak_ptr< GameObject>character);
+  void Update(float dt);
   void Render();
   void Shoot(Vec2 target);
 private:

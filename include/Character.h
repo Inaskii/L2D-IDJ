@@ -2,6 +2,8 @@
 #include "Vec2.h"
 #include "includes.h"
 #include "Timer.h"
+#include "SpriteRenderer.h"
+#include "Animator.h"
 
 class Character: Component{
 public:
