@@ -18,6 +18,7 @@ public:
   void RequestDelete();
   void AddComponent(Component* cpt);
   void RemoveComponent(Component* cpt);
+  float rotation;//0 a 2pi
   template <typename T>
   T* GetComponent();
   Rect box;

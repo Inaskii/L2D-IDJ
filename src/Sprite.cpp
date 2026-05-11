@@ -5,9 +5,11 @@
 
 Sprite::Sprite(){
   texture = nullptr;
+  flip = SDL_FLIP_NONE;
 }
   Sprite::Sprite(std::string file,int frameCountW, int frameCountH):
   cameraFollower(false){
+  flip = SDL_FLIP_NONE;
   Open(file);
 }
 Sprite::~Sprite(){
@@ -31,16 +33,34 @@ void Sprite::SetClip(int x, int y, int w, int h){
   clipRect.w = w;
   clipRect.h = h;
 }
-void Sprite::Render(int x, int y, int w, int h){
+void Sprite::Render(int x, int y, int w, int h, float angle){
   if(!cameraFollower) {x-=Camera::pos.x, y-=Camera::pos.y;}
 
   SDL_Rect temp;
   temp.x = x;
   temp.y = y;
-  temp.w = clipRect.w;
-  temp.h = clipRect.h;
-  SDL_RenderCopy(Game::GetInstance().GetRenderer(),texture,&clipRect,&temp);
+  temp.w = w;
+  temp.h = h;
+  SDL_Point center = {temp.w / 2, temp.h / 2};
+  SDL_RenderCopyEx(Game::GetInstance().GetRenderer(), texture, &clipRect, &temp, angle, &center, flip);
 
+}
+void Sprite::SetFlip(SDL_RendererFlip newFlip){
+  flip = newFlip;
+}
+void Sprite::FlipX(bool flipX){
+  if (flipX) {
+    flip = static_cast<SDL_RendererFlip>(flip | SDL_FLIP_HORIZONTAL);
+  } else {
+    flip = static_cast<SDL_RendererFlip>(flip & ~SDL_FLIP_HORIZONTAL);
+  }
+}
+void Sprite::FlipY(bool flipY){
+  if (flipY) {
+    flip = static_cast<SDL_RendererFlip>(flip | SDL_FLIP_VERTICAL);
+  } else {
+    flip = static_cast<SDL_RendererFlip>(flip & ~SDL_FLIP_VERTICAL);
+  }
 }
 int Sprite::GetWidth(){
   return width;

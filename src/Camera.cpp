@@ -10,8 +10,8 @@ void Camera::Unfollow() {focus = nullptr;}
 void Camera::Update(float dt)
 {
   if(focus != nullptr){
-    pos.x = focus->box.x+focus->box.w/2;
-    pos.y = focus->box.y+focus->box.h/2;
+    pos.x = focus->box.x + focus->box.w / 2 - 400;
+    pos.y = focus->box.y + focus->box.h / 2 - 300;//400 e 300 é o tamanho da tela/2
   }
   else{
     InputManager& input = InputManager::GetInstance();    

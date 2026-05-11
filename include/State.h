@@ -13,8 +13,8 @@ class State{
 public:
   State();
   ~State();
-  std::weak_ptr<GameObject> AddObject(GameObject go);
-  std::weak_ptr<GameObject> GetObjectPtr(GameObject go);
+  std::weak_ptr<GameObject> AddObject(std::shared_ptr<GameObject> go);
+  std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
   bool QuitRequested();
   void LoadAssets();
   

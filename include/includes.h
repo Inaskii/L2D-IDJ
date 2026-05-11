@@ -7,3 +7,7 @@
 #include <fstream>
 #include <cmath>
 #include <queue>
+#include <algorithm>
+
+
+inline float rad2Deg(float rad){ return rad * 180.0f / M_PI;}

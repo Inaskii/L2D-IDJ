@@ -34,6 +34,10 @@ bool Vec2::operator==(const Vec2& v) const {
 	return x == v.x && y == v.y;
 }
 
+bool Vec2::operator!=(const Vec2& v) const {
+	return x != v.x || y != v.y;
+}
+
 Vec2& Vec2::operator=(const Vec2& v) {
 	x = v.x;
 	y = v.y;
@@ -81,9 +85,6 @@ void Vec2::rotate(float angle) {
 	*this = rotated(angle);
 }
 
-float Vec2::atan2(float y, float x) {
-	return std::atan2(y, x);
-}
 
 float Vec2::dist(const Vec2& a, const Vec2& b) {
 	float dx = b.x - a.x;

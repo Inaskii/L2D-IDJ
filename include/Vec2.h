@@ -14,6 +14,7 @@ class Vec2{
     Vec2 operator*(const float f) const;
     Vec2 operator/(const float f) const;
     bool operator==(const Vec2& v) const;
+    bool operator!=(const Vec2& v) const;
     Vec2& operator=(const Vec2& v);
     Vec2& operator=(std::initializer_list<float> list);
 
@@ -23,8 +24,6 @@ class Vec2{
     Vec2 rotated(float angle) const;
     void rotate(float angle);
 
-    static float atan2(float y,float x);
     static float dist(const Vec2& a, const Vec2& b);
-    
 
 };

@@ -49,8 +49,9 @@ void SpriteRenderer::Render()
 	sprite.Render(
 			associated.box.x,
 			associated.box.y,
-			associated.box.w,
-			associated.box.h);
+				associated.box.w,
+				associated.box.h,
+				rad2Deg(associated.rotation));
 }
 
 void SpriteRenderer::SetFrame(int frame)
@@ -80,4 +81,13 @@ void SpriteRenderer::SetFrame(int frame)
 void SpriteRenderer::SetCameraFollower(bool b)
 {
 	sprite.cameraFollower = b;
+}
+
+void SpriteRenderer::FlipX(bool f)
+{
+	sprite.FlipX(f);
+}
+void SpriteRenderer::FlipY(bool f)
+{
+	sprite.FlipY(f);
 }

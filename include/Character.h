@@ -1,16 +1,19 @@
+
 #include "Component.h"
 #include "Vec2.h"
 #include "includes.h"
 #include "Timer.h"
 #include "SpriteRenderer.h"
+#include "Game.h"
 #include "Animator.h"
+#include "Gun.h"
 
-class Character: Component{
+class Character: public Component{
 public:
   class Command {
     public:
       enum CommandType { move, shoot };
-      Command(CommandType type, float x, float y){pos = {x,y};}
+      Command(CommandType type, float x, float y);
       CommandType type;
       Vec2 pos;
   };
@@ -29,7 +32,7 @@ private:
   Vec2 speed;
   float linearSpeed;
   int hp;
-  Timer deathTimer();
+  Timer deathTimer;
 };
 
 

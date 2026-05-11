@@ -5,7 +5,9 @@
 #include "../include/TileSet.h"
 #include "../include/TileMap.h"
 #include "../include/InputManager.h"
+#include "../include/PlayerController.h"
 #include "../include/SpriteRenderer.h"
+#include "../include/Character.h"
 #define INCLUDE_SDL
 
 State::State()
@@ -14,6 +16,7 @@ State::State()
     started(false),
     quitRequested(false)
 {
+  
 }
 State::~State()
 {
@@ -47,7 +50,19 @@ void State::LoadAssets()
   
   world->AddComponent(tileMap); 
   world->box.x = 0; world->box.y = 0;
-  objectArray.emplace_back(world); 
+  AddObject(std::shared_ptr<GameObject>(world));
+
+  GameObject* characterGO = new GameObject();
+  characterGO->box.x = 1280;
+  characterGO->box.y = 1280;
+
+  AddObject(std::shared_ptr<GameObject>(characterGO));
+
+  PlayerController* playerController = new PlayerController(*characterGO);
+  Character* character = new Character(*characterGO, "Player.png");
+  characterGO->AddComponent(character);
+  characterGO->AddComponent(playerController);
+  Camera::Follow(characterGO);
 
 
 
@@ -71,9 +86,10 @@ void State::Update(float dt){
     SpawnZombie(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
   }
 
-  for (const std::shared_ptr<GameObject>& gameObject : objectArray)
+  const size_t objectCount = objectArray.size();
+  for (size_t i = 0; i < objectCount; i++)
   {
-    gameObject->Update(dt);
+    objectArray[i]->Update(dt);
   }
   for(int i =0;i<objectArray.size();i++)
   {
@@ -95,7 +111,7 @@ void State::SpawnZombie(int x, int y)
   Zombie* zombie = new Zombie(*zombieGO);
   zombieGO->AddComponent(zombie);
 
-  objectArray.emplace_back(zombieGO);
+  AddObject(std::shared_ptr<GameObject>(zombieGO));
 }
 
 void State::Render()
@@ -116,3 +132,20 @@ void State::Render()
 
   SDL_RenderPresent(renderer);
 }
+  std::weak_ptr<GameObject> State::AddObject(std::shared_ptr<GameObject> go){
+
+    objectArray.emplace_back(go);
+    if(started) go->Start();
+    return std::weak_ptr<GameObject>(go);
+  
+  }
+  std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
+    std::weak_ptr<GameObject> ret;
+    for(std::shared_ptr<GameObject> &obj: objectArray){
+      if(obj.get() == go)
+      {
+        ret = std::weak_ptr<GameObject>(obj);
+      }
+    }
+    return ret;
+  }

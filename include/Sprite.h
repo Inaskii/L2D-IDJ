@@ -12,7 +12,10 @@ public:
   ~Sprite();
   void Open(std::string file);
   void SetClip(int x, int y, int w, int h);
-  void Render(int x, int y,int w, int h);
+  void Render(int x, int y,int w, int h, float angle = 0.0f);
+  void SetFlip(SDL_RendererFlip flip);
+  void FlipX(bool flip);
+  void FlipY(bool flip);
   int GetWidth();
   int GetHeigth();  
   bool isOpen();
@@ -24,5 +27,7 @@ public:
   int width, height;
   SDL_Rect clipRect;
   int frameCountW, frameCountH;
+  SDL_RendererFlip flip;
+  void UpdateFlip();
 
 };

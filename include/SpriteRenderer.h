@@ -15,6 +15,8 @@ public:
   void Render() override;
   void SetFrame(int frame);
   void SetCameraFollower(bool b);
+  void FlipX(bool flip);
+  void FlipY(bool flip);
 private:
   Sprite sprite;
   int frameCountW;

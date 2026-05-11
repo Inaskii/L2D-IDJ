@@ -1,15 +1,19 @@
-#include "Character.h"
+#pragma once
 #include "Sound.h"
-class Gun: Component{
+class Character;
+
+class Gun: public Component{
 public:
   Gun(GameObject& associated, std::weak_ptr< GameObject>character);
+  void Start();
   void Update(float dt);
   void Render();
   void Shoot(Vec2 target);
 private:
   Sound shotSound;
   Sound reloadSound;
-  int cooldownState;
+  enum cooldownState{ready, shoot, reload, pump};
+  cooldownState state;
   Timer cdTimer;
   std::weak_ptr<GameObject> character;
   float angle;

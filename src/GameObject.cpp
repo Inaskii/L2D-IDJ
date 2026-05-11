@@ -3,11 +3,12 @@
 
 GameObject::GameObject(){
   isDead=  false;
+  rotation = 0.0f;
 }
 GameObject::~GameObject(){
   for(Component *Component:components)
   {
-    Component->~Component();
+    delete Component;
   }
 }
 
@@ -45,6 +46,7 @@ void GameObject::RemoveComponent(Component* cpt){
   // o(n) tentar otimizar depois
   auto it = std::find(components.begin(), components.end(), cpt);
   if (it != components.end()) {
+    delete *it;
     components.erase(it);
   }
 }
