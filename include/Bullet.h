@@ -8,7 +8,10 @@ public:
   void Start();
   void Update(float dt);
   void Render();
+  bool targetsPlayer();
+  void NotifyCollision(GameObject& other);
   int GetDamage();
+
 
 private:
   float angle;

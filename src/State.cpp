@@ -8,6 +8,8 @@
 #include "../include/PlayerController.h"
 #include "../include/SpriteRenderer.h"
 #include "../include/Character.h"
+#include "../include/Collider.h"
+#include "../include/Collision.h"
 #define INCLUDE_SDL
 
 State::State()
@@ -98,6 +100,25 @@ void State::Update(float dt){
       objectArray.erase(objectArray.begin()+i);
       i--;
     }
+  }//o(n^2), existem otimizações para isso
+  for(int i =0;i<objectArray.size();i++)
+  {
+    auto objA = objectArray[i]; 
+    auto a = objA->GetComponent<Collider>();
+    if (!a) continue;
+      for(int j =i+1;j<objectArray.size();j++)
+      {
+        auto objB = objectArray[j]; 
+        auto b = objB->GetComponent<Collider>();
+        if (!b) continue;
+        if(Collision::IsColliding(a->box,b->box,objA->rotation,objB->rotation))
+        {
+          objA->NotifyCollision(*objB);
+          objB->NotifyCollision(*objA);
+          std::cout<<"Collision\n";
+        }
+    
+      }
   }
 }
 
@@ -142,8 +163,7 @@ void State::Render()
   std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
     std::weak_ptr<GameObject> ret;
     for(std::shared_ptr<GameObject> &obj: objectArray){
-      if(obj.get() == go)
-      {
+      if(obj.get() == go){
         ret = std::weak_ptr<GameObject>(obj);
       }
     }

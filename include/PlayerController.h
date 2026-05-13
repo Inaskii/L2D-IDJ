@@ -7,6 +7,7 @@ public:
   PlayerController(GameObject& associated);
   void Start();
   void Update(float dt);
+  void NotifyCollision(GameObject& other);
   void Render();
 };
 

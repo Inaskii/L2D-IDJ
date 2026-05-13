@@ -54,6 +54,10 @@ void SpriteRenderer::Render()
 				rad2Deg(associated.rotation));
 }
 
+		void SpriteRenderer::NotifyCollision(GameObject& other)
+		{
+		}
+
 void SpriteRenderer::SetFrame(int frame)
 {
 	if (!sprite.isOpen()) {

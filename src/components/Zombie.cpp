@@ -1,5 +1,7 @@
 #include "../../include/Zombie.h"
 #include "../../include/GameObject.h"
+#include "../../include/Bullet.h"
+#include "../../include/Collider.h"
 #include "../../include/SpriteRenderer.h"
 #include "../../include/Animator.h"
 #include "../../include/InputManager.h"
@@ -16,6 +18,8 @@ Zombie::Zombie(GameObject& associated)
 
   SpriteRenderer* spriteRenderer = new SpriteRenderer(associated, "Enemy.png", 3, 2);
   associated.AddComponent(spriteRenderer);
+  Collider* collider = new Collider(associated);
+  associated.AddComponent(collider);
   Animator* animator = new Animator(associated);
   associated.AddComponent(animator);
   animator->AddAnimation("walking",Animation(0,3,0.15f));
@@ -79,4 +83,12 @@ void Zombie::Die(){
 
 void Zombie::Render()
 {
+}
+
+void Zombie::NotifyCollision(GameObject& other)
+{
+  Bullet* bullet = other.GetComponent<Bullet>();
+  if (bullet != nullptr) {
+    Damage(bullet->GetDamage());
+  }
 }

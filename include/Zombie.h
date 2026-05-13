@@ -13,6 +13,7 @@ public:
   void Start();
   void Update(float dt);
   void Render();
+  void NotifyCollision(GameObject& other);
   void Die();
 private:
   Sound hitSound,deathSound;

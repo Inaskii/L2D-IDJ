@@ -1,15 +1,20 @@
 #include "../../include/Bullet.h"
+#include "../../include/GameObject.h"
+#include "../../include/Collider.h"
 #include "../../include/SpriteRenderer.h"
+#include "../../include/Zombie.h"
 
-Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance)
+Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, bool targetsPlayer)
   : Component(associated),
     speed(speed),
     angle(angle),
+    targetsPlayer(targetsPlayer)
     distanceLeft(maxDistance),
     damage(damage),
     dir({cos(angle), sin(angle)})
 {
   associated.AddComponent(new SpriteRenderer(associated, "Bullet.png"));
+  associated.AddComponent(new Collider(associated));
 }
 
 void Bullet::Start()
@@ -29,11 +34,10 @@ void Bullet::Update(float dt)
   }
 }
 
-void Bullet::Render()
+void Bullet::NotifyCollision(GameObject& other)
 {
+  if(other.GetComponent<Zombie>() && !other.IsDead()) associated.RequestDelete();
 }
+void Bullet::Render(){}
+int Bullet::GetDamage(){return damage;}
 
-int Bullet::GetDamage()
-{
-  return damage;
-}

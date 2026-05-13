@@ -32,6 +32,11 @@ void GameObject::Render(){
   }
 
 }
+void GameObject::NotifyCollision(GameObject& other){
+  for(Component *Component:components){
+    Component->NotifyCollision(other);
+  }
+}
 bool GameObject::IsDead(){
   return isDead;
 }

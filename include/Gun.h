@@ -8,6 +8,7 @@ public:
   void Start();
   void Update(float dt);
   void Render();
+  void NotifyCollision(GameObject& other);
   void Shoot(Vec2 target);
 private:
   Sound shotSound;

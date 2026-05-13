@@ -11,8 +11,9 @@ public:
   void Open(std::string file);
   void SetFrameCount(int frameCountW, int frameCountH);
   void Start();
-  void Update(float dt) override;
-  void Render() override;
+  void Update(float dt);
+  void Render();
+  void NotifyCollision(GameObject& other);
   void SetFrame(int frame);
   void SetCameraFollower(bool b);
   void FlipX(bool flip);

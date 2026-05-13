@@ -33,6 +33,9 @@ void Animator::Update(float dt){
 void Animator::Render(){
 
 }
+void Animator::NotifyCollision(GameObject& other){
+
+}
 void Animator::SetAnimation(std::string name){
   auto it = animations.find(name);
   if(it == animations.end()) return;

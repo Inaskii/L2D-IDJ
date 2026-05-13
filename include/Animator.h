@@ -9,6 +9,7 @@ public:
   void Start();
   void Update(float dt);
   void Render();
+  void NotifyCollision(GameObject& other);
   void SetAnimation(std::string name);
   void AddAnimation(std::string name, Animation anim);
 private:

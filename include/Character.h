@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "Animator.h"
 #include "Gun.h"
+#include "Sound.h"
 
 class Character: public Component{
 public:
@@ -23,6 +24,7 @@ public:
   void Start();
   void Update (float dt);
   void Render ();
+  void NotifyCollision(GameObject& other);
   void Issue (Command task);
   static Character* player;
   
@@ -32,6 +34,11 @@ private:
   Vec2 speed;
   float linearSpeed;
   int hp;
+  bool hit;
+  bool dead;
+  Sound hitSound;
+  Sound deathSound;
+  Timer hitTimer;
   Timer deathTimer;
 };
 

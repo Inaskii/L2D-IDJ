@@ -14,6 +14,7 @@ public:
   void Update(float dt);
   void Start();
   void Render();
+  void NotifyCollision(GameObject& other);
   bool IsDead();
   void RequestDelete();
   void AddComponent(Component* cpt);

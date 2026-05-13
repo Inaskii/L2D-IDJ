@@ -1,4 +1,6 @@
 #include "../include/Character.h"
+#include "../include/Collider.h"
+#include "../include/Zombie.h"
 
 Character* Character::player = nullptr;
 
@@ -14,12 +16,19 @@ Character::Character (GameObject& associated, std::string sprite):
   hp(100),
   linearSpeed(12),
   speed({0,0}),
-  taskQueue()
+  taskQueue(),
+  hit(false),
+  dead(false),
+  hitSound("Hit1.wav"),
+  deathSound("Dead.wav")
 {
   
 
     SpriteRenderer* spriteRenderer = new SpriteRenderer(associated,"Player.png",3,4);
     associated.AddComponent(spriteRenderer);
+
+    Collider* collider = new Collider(associated);
+    associated.AddComponent(collider);
 
     
 
@@ -44,6 +53,14 @@ void Character::Start(){
 
 }
 void Character::Update (float dt){
+  if (dead) {
+    deathTimer.Update(dt);
+    if (deathTimer.Get() > 1.0f) {
+      associated.RequestDelete();
+    }
+    return;
+  }
+
   speed = {0,0};
   Animator* animator = associated.GetComponent<Animator>();
   while(taskQueue.size()){ 
@@ -70,6 +87,37 @@ void Character::Update (float dt){
   this->associated.box.x+=speed.x;
   this->associated.box.y+=speed.y;
 
+  hitTimer.Update(dt);
+  if (hit && hitTimer.Get() > 0.25f) {
+    hit = false;
+  }
+
 }
 void Character::Render (){}
+void Character::NotifyCollision(GameObject& other){
+  if (dead || hit) {
+    return;
+  }
+
+  Zombie* zombie = other.GetComponent<Zombie>();
+  if (zombie == nullptr) {
+    return;
+  }
+
+  hp -= 10;
+  hit = true;
+  hitTimer.Restart();
+  hitSound.Play(1);
+
+  if (hp <= 0) {
+    dead = true;
+    Camera::Unfollow();
+    deathTimer.Restart();
+    deathSound.Play(1);
+    auto animator = associated.GetComponent<Animator>();
+    if (animator) {
+      animator->SetAnimation("dead");
+    }
+  }
+}
 void Character::Issue (Command task){taskQueue.push(task); }

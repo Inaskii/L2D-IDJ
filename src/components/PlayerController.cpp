@@ -33,3 +33,4 @@ void PlayerController::Update(float dt){
 }
   
 void PlayerController::Render(){}
+void PlayerController::NotifyCollision(GameObject& other){}

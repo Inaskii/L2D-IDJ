@@ -73,7 +73,7 @@ void Gun::Update(float dt){
     // }
     break;
   case shoot:
-    if(cdTimer.Get() > 0.3){
+    if(cdTimer.Get() > 0.0){
       cdTimer.Restart();
       Animator* animator = associated.GetComponent<Animator>();
       animator->SetAnimation("reloading");
@@ -82,7 +82,7 @@ void Gun::Update(float dt){
     }
     break;
   case reload:
-    if(cdTimer.Get() > 0.1){
+    if(cdTimer.Get() > 0.0){
       state = pump;
       cdTimer.Restart();
       Animator* animator = associated.GetComponent<Animator>();
@@ -90,7 +90,7 @@ void Gun::Update(float dt){
     }
     break;
   case pump:
-    if(cdTimer.Get() > 0.1){
+    if(cdTimer.Get() > 0.0){
       state = ready; 
     }
     break;
@@ -111,6 +111,10 @@ void Gun::Update(float dt){
 void Gun::Render(){
 
 }
+
+void Gun::NotifyCollision(GameObject& other){
+
+}
  
 void Gun::Shoot(Vec2 target){
   if(state != ready)return;
@@ -127,7 +131,7 @@ void Gun::Shoot(Vec2 target){
     Vec2 gunPos = associated.box.GetCenter();
     Vec2 dir = {target.x - gunPos.x, target.y - gunPos.y};
     dir.normalize();
-    float angle = atan2(dir.y, dir.x) + (((std::rand() / (float)RAND_MAX) * spread - 10.0f) * M_PI / 180.0f);
+    float angle = atan2(dir.y, dir.x) + (((std::rand() / (float)RAND_MAX) * spread - spread / 2.0f) * M_PI / 180.0f);
     associated.rotation = angle;
     GameObject* bulletGO = new GameObject();
     bulletGO->box.x = gunPos.x;

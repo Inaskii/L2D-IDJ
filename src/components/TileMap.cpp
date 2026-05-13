@@ -42,6 +42,8 @@ int& TileMap::At(int x, int y, int z){
 }
 void TileMap::Update(float dt){}
 
+void TileMap::NotifyCollision(GameObject& other){}
+
 void TileMap::RenderLayer(int layer){
 	if(tileSet == nullptr) return;
 	int realWidth = tileSet->GetTileWidth();
