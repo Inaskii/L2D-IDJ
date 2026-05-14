@@ -3,14 +3,14 @@
 #include "../include/Bullet.h"
 
 
-Gun::Gun(GameObject& associated, std::weak_ptr< GameObject>character):
+Gun::Gun(GameObject& associated, std::weak_ptr<GameObject> owner, bool targetsPlayer):
 Component(associated),
 shotSound("Range.wav"),
 reloadSound("PumpAction.mp3"),
 state(ready),
-
+owner(owner),
+targetsPlayer(targetsPlayer),
 angle(0){
-  this->character = character;
 
   SpriteRenderer* spriteRenderer = new SpriteRenderer(associated,"Gun.png",3,2);
   associated.AddComponent(spriteRenderer);
@@ -29,39 +29,36 @@ void Gun::Start(){
   animator->SetAnimation("idle");
 }
 
+void Gun::Aim(Vec2 target){
+  auto ownerGO = owner.lock();
+  if (!ownerGO) {
+    return;
+  }
+
+  Vec2 center = ownerGO->box.GetCenter();
+  Vec2 aim = target - center;
+  if (aim.magnitude() == 0) {
+    return;
+  }
+
+  bool flip = aim.x < 0;
+  int offx = flip ? -20 : 20;
+  associated.box.x = center.x + offx - associated.box.w/2;
+  associated.box.y = center.y + 10 - associated.box.h/2;
+  associated.rotation = atan2(center.y - target.y, center.x - target.x) + M_PI;
+
+  if (SpriteRenderer* gunRenderer = associated.GetComponent<SpriteRenderer>()) {
+    gunRenderer->FlipY(flip);
+  }
+}
+
 void Gun::Update(float dt){
-  auto player = character.lock();
   cdTimer.Update(dt);
 
-  if (!player){
+  auto ownerGO = owner.lock();
+  if (!ownerGO){
     associated.RequestDelete();
     return;
-  }
-  Vec2 center = player->box.GetCenter();
-  Vec2 mousePos = {
-    static_cast<float>(InputManager::GetInstance().GetMouseX()),
-    static_cast<float>(InputManager::GetInstance().GetMouseY())
-  };
-  Vec2 aim = mousePos - center;
-  bool flip = aim.x < 0;
-  int offx = flip  ? -20:20;
-  associated.box.x = center.x + offx - associated.box.w/2;
-  associated.box.y = center.y + 10- associated.box.h/2;
-
-  SpriteRenderer* playerRenderer = player->GetComponent<SpriteRenderer>();
-  SpriteRenderer* gunRenderer = associated.GetComponent<SpriteRenderer>();
-  if (!playerRenderer || !gunRenderer) {
-    return;
-  }
-  associated.rotation = atan2(center.y - mousePos.y, center.x - mousePos.x) + M_PI;
-  
-  if (flip) {
-    playerRenderer->FlipX(true);
-    gunRenderer->FlipY(true);
-  } else {
-    // associated.rotation = -associated.rotation;
-    playerRenderer->FlipX(false);
-    gunRenderer->FlipY(false);
   }
   switch (state)
   {
@@ -73,7 +70,7 @@ void Gun::Update(float dt){
     // }
     break;
   case shoot:
-    if(cdTimer.Get() > 0.0){
+    if(cdTimer.Get() > 0.3){
       cdTimer.Restart();
       Animator* animator = associated.GetComponent<Animator>();
       animator->SetAnimation("reloading");
@@ -82,7 +79,7 @@ void Gun::Update(float dt){
     }
     break;
   case reload:
-    if(cdTimer.Get() > 0.0){
+    if(cdTimer.Get() > 0.3){
       state = pump;
       cdTimer.Restart();
       Animator* animator = associated.GetComponent<Animator>();
@@ -90,7 +87,7 @@ void Gun::Update(float dt){
     }
     break;
   case pump:
-    if(cdTimer.Get() > 0.0){
+    if(cdTimer.Get() > 0.1){
       state = ready; 
     }
     break;
@@ -116,17 +113,18 @@ void Gun::NotifyCollision(GameObject& other){
 
 }
  
-void Gun::Shoot(Vec2 target){
-  if(state != ready)return;
-  auto player = character.lock();
-  if (!player) {
-    return;
+bool Gun::Shoot(Vec2 target){
+  Aim(target);
+  if(state != ready)return false;
+  auto ownerGO = owner.lock();
+  if (!ownerGO) {
+    return false;
   }
   state = shoot;
 
-  float spread = 20;
+  float spread = 25;
   //adicionei multiplos tiros e spread para ser uma shotgun
-  for(int i =0; i<5;i ++){
+  for(int i =0; i<3;i ++){
 
     Vec2 gunPos = associated.box.GetCenter();
     Vec2 dir = {target.x - gunPos.x, target.y - gunPos.y};
@@ -136,9 +134,10 @@ void Gun::Shoot(Vec2 target){
     GameObject* bulletGO = new GameObject();
     bulletGO->box.x = gunPos.x;
     bulletGO->box.y = gunPos.y;
-    bulletGO->AddComponent(new Bullet(*bulletGO, angle, 800.0f, 10, 600.0f));
+    bulletGO->AddComponent(new Bullet(*bulletGO, angle, 800.0f, 10, 600.0f,targetsPlayer));
     Game::GetInstance().GetState().AddObject(std::shared_ptr<GameObject>(bulletGO));
     shotSound.Play();
     cdTimer.Restart();
   }
+  return true;
 }

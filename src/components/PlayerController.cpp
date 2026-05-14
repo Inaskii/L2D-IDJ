@@ -16,6 +16,7 @@ void PlayerController::Start(){
 void PlayerController::Update(float dt){
   InputManager& inputManager = InputManager::GetInstance();
   auto player = associated.GetComponent<Character>();
+  player->Issue(Character::Command(Character::Command::aim,inputManager.GetMouseX(),inputManager.GetMouseY()));
   Vec2 dir = {
     inputManager.IsKeyDown('d')-inputManager.IsKeyDown('a'),
     inputManager.IsKeyDown('w')-inputManager.IsKeyDown('s')
@@ -27,7 +28,6 @@ void PlayerController::Update(float dt){
   }
   
   if (inputManager.IsMouseDown(LEFT_MOUSE_BUTTON)) {
-    std::cout<<"Shoot\n";
     player->Issue(Character::Command(Character::Command::shoot,inputManager.GetMouseX(),inputManager.GetMouseY()));
   }
 }

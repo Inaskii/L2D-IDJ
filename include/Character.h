@@ -13,7 +13,7 @@ class Character: public Component{
 public:
   class Command {
     public:
-      enum CommandType { move, shoot };
+      enum CommandType { move, aim, shoot };
       Command(CommandType type, float x, float y);
       CommandType type;
       Vec2 pos;
@@ -25,6 +25,9 @@ public:
   void Update (float dt);
   void Render ();
   void NotifyCollision(GameObject& other);
+  void Damage(int damage);
+  Vec2 GetCenter();
+  bool IsDead();
   void Issue (Command task);
   static Character* player;
   

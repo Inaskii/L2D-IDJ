@@ -6,6 +6,7 @@
 #include "SDL_include.h"
 #include "Camera.h"
 #include "Zombie.h"
+#include "WaveSpawner.h"
 
 class GameObject;
 
@@ -23,6 +24,7 @@ public:
   void Render();
 
   void SpawnZombie(int x, int y);
+  void SpawnNPC(int x, int y);
 
 private:
   bool started; 

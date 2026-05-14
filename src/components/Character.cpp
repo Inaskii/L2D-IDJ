@@ -1,4 +1,5 @@
 #include "../include/Character.h"
+#include "../include/Bullet.h"
 #include "../include/Collider.h"
 #include "../include/Zombie.h"
 
@@ -52,6 +53,41 @@ void Character::Start(){
   gun = Game::GetInstance().GetState().AddObject(gunGO);
 
 }
+
+Vec2 Character::GetCenter()
+{
+  return associated.box.GetCenter();
+}
+
+bool Character::IsDead()
+{
+  return dead;
+}
+
+void Character::Damage(int damage)
+{
+  if (dead || hit) {
+    return;
+  }
+
+  std::cout<<hp<<"\n";
+  hp -= damage;
+  hit = true;
+  hitTimer.Restart();
+  hitSound.Play(1);
+
+  if (hp <= 0) {
+    dead = true;
+    Camera::Unfollow();
+    deathTimer.Restart();
+    deathSound.Play(1);
+    auto animator = associated.GetComponent<Animator>();
+    if (animator) {
+      animator->SetAnimation("dead");
+    }
+  }
+}
+
 void Character::Update (float dt){
   if (dead) {
     deathTimer.Update(dt);
@@ -65,11 +101,26 @@ void Character::Update (float dt){
   Animator* animator = associated.GetComponent<Animator>();
   while(taskQueue.size()){ 
     auto task = taskQueue.front();taskQueue.pop();
+    if (task.type == Command::CommandType::aim) {
+      auto gunGO = gun.lock();
+      if (gunGO) {
+        auto gunComponent = gunGO->GetComponent<Gun>();
+        if (gunComponent) {
+          gunComponent->Aim(task.pos);
+        }
+      }
+
+      if (SpriteRenderer* spriteRenderer = associated.GetComponent<SpriteRenderer>()) {
+        spriteRenderer->FlipX(task.pos.x < associated.box.GetCenter().x);
+      }
+    }
+
     if(task.type == Command::CommandType::shoot) {
       auto gunGO = gun.lock();
       if (gunGO) {
         auto gunComponent = gunGO->GetComponent<Gun>();
         if (gunComponent) {
+          gunComponent->Aim(task.pos);
           gunComponent->Shoot(task.pos);
         }
       }
@@ -95,29 +146,11 @@ void Character::Update (float dt){
 }
 void Character::Render (){}
 void Character::NotifyCollision(GameObject& other){
-  if (dead || hit) {
-    return;
-  }
-
   Zombie* zombie = other.GetComponent<Zombie>();
   if (zombie == nullptr) {
     return;
   }
 
-  hp -= 10;
-  hit = true;
-  hitTimer.Restart();
-  hitSound.Play(1);
-
-  if (hp <= 0) {
-    dead = true;
-    Camera::Unfollow();
-    deathTimer.Restart();
-    deathSound.Play(1);
-    auto animator = associated.GetComponent<Animator>();
-    if (animator) {
-      animator->SetAnimation("dead");
-    }
-  }
+  Damage(10);
 }
 void Character::Issue (Command task){taskQueue.push(task); }

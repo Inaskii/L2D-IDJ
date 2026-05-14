@@ -3,6 +3,10 @@
 #include "Component.h"
 #include "Rect.h"
 #include "Vec2.h"
+#include "Camera.h"
+#include "Game.h"
+#include <SDL2/SDL.h>
+
 
 class Collider : public Component {
 public:

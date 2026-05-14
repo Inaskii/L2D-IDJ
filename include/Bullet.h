@@ -4,11 +4,11 @@
 
 class Bullet : public Component {
 public:
-  Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance);
+  Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, bool targetsPlayer);
   void Start();
   void Update(float dt);
   void Render();
-  bool targetsPlayer();
+  bool targetsPlayer;
   void NotifyCollision(GameObject& other);
   int GetDamage();
 

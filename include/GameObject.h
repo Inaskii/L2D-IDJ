@@ -16,6 +16,7 @@ public:
   void Render();
   void NotifyCollision(GameObject& other);
   bool IsDead();
+  void Die();
   void RequestDelete();
   void AddComponent(Component* cpt);
   void RemoveComponent(Component* cpt);

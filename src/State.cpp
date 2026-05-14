@@ -10,6 +10,9 @@
 #include "../include/Character.h"
 #include "../include/Collider.h"
 #include "../include/Collision.h"
+#include "../include/Npc.h"
+#include "../include/WaveSpawner.h"
+#include "../include/AIController.h"
 #define INCLUDE_SDL
 
 State::State()
@@ -28,9 +31,10 @@ State::~State()
 void State::Start()
 {
   LoadAssets();
-  for(auto ptr: objectArray)
+  for(int i =0;i <objectArray.size()/*pegar size toda iteração pois ele vai alterando*/;i++)
   {
-    ptr->Start();
+    
+    objectArray[i]->Start();
   }
 
 
@@ -65,6 +69,16 @@ void State::LoadAssets()
   characterGO->AddComponent(character);
   characterGO->AddComponent(playerController);
   Camera::Follow(characterGO);
+
+  GameObject* npcGO = new GameObject();
+  npcGO->box.x = 1500;
+  npcGO->box.y = 1280;
+  npcGO->AddComponent(new Npc(*npcGO));
+  AddObject(std::shared_ptr<GameObject>(npcGO));
+
+  GameObject* waveSpawnerGO = new GameObject();
+  waveSpawnerGO->AddComponent(new WaveSpawner(*waveSpawnerGO));
+  AddObject(std::shared_ptr<GameObject>(waveSpawnerGO));
 
 
 
@@ -115,7 +129,7 @@ void State::Update(float dt){
         {
           objA->NotifyCollision(*objB);
           objB->NotifyCollision(*objA);
-          std::cout<<"Collision\n";
+          // std::cout<<"Collision\n";
         }
     
       }
@@ -133,6 +147,15 @@ void State::SpawnZombie(int x, int y)
   zombieGO->AddComponent(zombie);
 
   AddObject(std::shared_ptr<GameObject>(zombieGO));
+}
+void State::SpawnNPC(int x, int y)
+{
+  GameObject* npcGO = new GameObject();
+  npcGO->box.x = x;
+  npcGO->box.y = y;
+  npcGO->AddComponent(new Npc(*npcGO));
+
+  AddObject(std::shared_ptr<GameObject>(npcGO));
 }
 
 void State::Render()

@@ -1,29 +1,33 @@
 #pragma once
+#include "AIController.h"
+#include "Bullet.h"
+#include "Collider.h"
+#include "GameObject.h"
+#include "SpriteRenderer.h"
+#include "Animator.h"
 #include "Component.h"
 #include "includes.h"
 #include "Sound.h"
 #include "Timer.h"
 
-
-
-class Zombie : public Component {
+class Npc : public Component {
 public:
-  Zombie(GameObject& associated);
-  ~Zombie();
+  Npc(GameObject& associated);
+  ~Npc();
   void Damage(int damage);
   void Start();
   void Update(float dt);
   void Render();
   void NotifyCollision(GameObject& other);
   void Die();
-  static int GetZombieCount();
+  std::weak_ptr<GameObject> GetWeapon();
   bool IsDead();
 private:
-  static int zombieCount;
-  Sound hitSound,deathSound;
+  Sound hitSound, deathSound;
   bool hit;
   bool dead;
   int hitpoints;
   Timer hitTimer;
   Timer deathTimer;
+  std::weak_ptr<GameObject> weapon;
 };

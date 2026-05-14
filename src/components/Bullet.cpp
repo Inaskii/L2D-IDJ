@@ -2,13 +2,15 @@
 #include "../../include/GameObject.h"
 #include "../../include/Collider.h"
 #include "../../include/SpriteRenderer.h"
+#include "../../include/Npc.h"
 #include "../../include/Zombie.h"
+#include "../../include/Character.h"
 
 Bullet::Bullet(GameObject& associated, float angle, float speed, int damage, float maxDistance, bool targetsPlayer)
   : Component(associated),
     speed(speed),
     angle(angle),
-    targetsPlayer(targetsPlayer)
+    targetsPlayer(targetsPlayer),
     distanceLeft(maxDistance),
     damage(damage),
     dir({cos(angle), sin(angle)})
@@ -36,7 +38,19 @@ void Bullet::Update(float dt)
 
 void Bullet::NotifyCollision(GameObject& other)
 {
-  if(other.GetComponent<Zombie>() && !other.IsDead()) associated.RequestDelete();
+  if (targetsPlayer) {
+    Character* character = other.GetComponent<Character>();
+    if (character != nullptr && !other.IsDead()) {
+      character->Damage(damage);
+      associated.RequestDelete();
+    }
+  } else {
+    Npc* npc = other.GetComponent<Npc>();
+    Zombie* zombie = other.GetComponent<Zombie>();
+    if ((zombie != nullptr && !zombie->IsDead()) || (npc != nullptr && !npc->IsDead())) {
+      associated.RequestDelete();
+    }
+  }
 }
 void Bullet::Render(){}
 int Bullet::GetDamage(){return damage;}

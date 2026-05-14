@@ -11,12 +11,13 @@ GameObject::~GameObject(){
     delete Component;
   }
 }
-
+void GameObject::Die(){isDead=1;}
 void GameObject::Start()
 {
-  for(Component *Component:components)
+  const size_t componentCount = components.size();
+  for (size_t i = 0; i < componentCount; i++)
   {
-    Component->Start();
+    components[i]->Start();
   }     
 }
 
@@ -33,8 +34,8 @@ void GameObject::Render(){
 
 }
 void GameObject::NotifyCollision(GameObject& other){
-  for(Component *Component:components){
-    Component->NotifyCollision(other);
+  for (size_t i = 0; i < components.size(); i++) {
+    components[i]->NotifyCollision(other);
   }
 }
 bool GameObject::IsDead(){

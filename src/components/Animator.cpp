@@ -39,7 +39,7 @@ void Animator::NotifyCollision(GameObject& other){
 void Animator::SetAnimation(std::string name){
   auto it = animations.find(name);
   if(it == animations.end()) return;
-  std::cout << "start = " << frameStart<< " end ="  << frameEnd << ", current = " << currentFrame<<std::endl;
+  // std::cout << "start = " << frameStart<< " end ="  << frameEnd << ", current = " << currentFrame<<std::endl;
   frameStart = it->second.frameStart;
   frameEnd = it->second.frameEnd;
   if(currentFrame >= frameStart && currentFrame< frameEnd) return;//se ja estiver na animação nn resetar
