@@ -1,35 +1,37 @@
 #pragma once
 #include "includes.h"
-#include "Sprite.h"
-#include "Music.h"
-#include "Game.h"
-#include "SDL_include.h"
-#include "Camera.h"
-#include "Zombie.h"
-#include "WaveSpawner.h"
 
 class GameObject;
+class Rect;
 
-class State{
+class State {
 public:
   State();
-  ~State();
-  std::weak_ptr<GameObject> AddObject(std::shared_ptr<GameObject> go);
-  std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+  virtual ~State();
+
+  virtual void Start() = 0;
+  virtual void Pause() = 0;
+  virtual void Resume() = 0;
+  virtual void Update(float dt) = 0;
+  virtual void Render() = 0;
+
+  virtual std::weak_ptr<GameObject> AddObject(std::shared_ptr<GameObject> go);
+  virtual std::weak_ptr<GameObject> GetObjectPtr(GameObject* go);
+  virtual bool IsTileBlocked(const Rect& box) const;
+
+  bool PopRequested();
   bool QuitRequested();
-  void LoadAssets();
-  
-  void Start();
-  void Update(float dt);
-  void Render();
 
-  void SpawnZombie(int x, int y);
-  void SpawnNPC(int x, int y);
+  virtual void StartArray();
+  virtual void UpdateArray(float dt);
+  virtual void RenderArray();
 
-private:
-  bool started; 
-  Sprite sprite;
-  Music music;
+  virtual void SpawnZombie(int x, int y) = 0;
+  virtual void SpawnNPC(int x, int y) = 0;
+
+protected:
+  bool popRequested;
   bool quitRequested;
+  bool started; 
   std::vector<std::shared_ptr<GameObject>> objectArray;
 };

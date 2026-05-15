@@ -31,9 +31,9 @@ void Npc::Start(){
   associated.AddComponent(new Collider(associated));
 
   auto weaponGO = std::make_shared<GameObject>();
-  auto owner = Game::GetInstance().GetState().GetObjectPtr(&associated);
+  auto owner = Game::GetInstance().GetCurrentState().GetObjectPtr(&associated);
   weaponGO->AddComponent(new Gun(*weaponGO, owner, true));
-  weapon = Game::GetInstance().GetState().AddObject(weaponGO);
+  weapon = Game::GetInstance().GetCurrentState().AddObject(weaponGO);
 }
 
 std::weak_ptr<GameObject> Npc::GetWeapon()

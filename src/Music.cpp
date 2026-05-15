@@ -9,7 +9,6 @@ Music::Music(std::string file){
 }
 Music::~Music(){
   Stop();
-  Mix_FreeMusic(music);
 }
 void Music::Play (int time){
   Mix_PlayMusic(music,time);

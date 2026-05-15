@@ -40,9 +40,34 @@ int& TileMap::At(int x, int y, int z){
 
     return tileMatrix[(z * mapWidth * mapHeight) + (y * mapWidth) + x];
 }
+int TileMap::At(int x, int y, int z) const{
+
+	return tileMatrix[(z * mapWidth * mapHeight) + (y * mapWidth) + x];
+}
 void TileMap::Update(float dt){}
 
 void TileMap::NotifyCollision(GameObject& other){}
+
+bool TileMap::IsBlocked(const Rect& box) const{
+	if(tileSet == nullptr || mapWidth <= 0 || mapHeight <= 0) return false;
+
+	int tileWidth = tileSet->GetTileWidth();
+	int tileHeight = tileSet->GetTileHeight();
+	if(tileWidth <= 0 || tileHeight <= 0) return false;
+
+	int startX = std::max(0, static_cast<int>(std::floor(box.x / tileWidth)));
+	int startY = std::max(0, static_cast<int>(std::floor(box.y / tileHeight)));
+	int endX = std::min(mapWidth - 1, static_cast<int>(std::floor((box.x + box.w - 1) / tileWidth)));
+	int endY = std::min(mapHeight - 1, static_cast<int>(std::floor((box.y + box.h - 1) / tileHeight)));
+
+	for(int y = startY; y <= endY; y++){
+		for(int x = startX; x <= endX; x++){
+			if(tileSet->IsSolid(At(x, y, 0))) return true;
+		}
+	}
+
+	return false;
+}
 
 void TileMap::RenderLayer(int layer){
 	if(tileSet == nullptr) return;

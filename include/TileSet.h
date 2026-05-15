@@ -8,6 +8,7 @@ class TileSet{
     void RenderTile(unsigned index, float x, float y);
     int GetTileWidth();
     int GetTileHeight();
+    bool IsSolid(unsigned index) const;
 private:
   Sprite tileSet;
   int tileWidth;

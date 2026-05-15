@@ -30,6 +30,7 @@ void Collider::Update(float dt) {
 
 
 void Collider::Render() {
+	return;
 	Vec2 center( box.GetCenter() );
 	SDL_Point points[5];
 

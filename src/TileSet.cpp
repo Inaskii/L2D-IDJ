@@ -39,3 +39,11 @@ int TileSet::GetTileWidth(){
 int TileSet::GetTileHeight(){
   return tileHeight;
 }
+
+bool TileSet::IsSolid(unsigned index) const{
+  if(index >= (unsigned)tileCount) return false;
+
+  int rowIndex = index / col;
+  int colIndex = index % col;
+  return (colIndex >= 0 && colIndex <= 2) && (rowIndex >= 3 && rowIndex <= 4);
+}

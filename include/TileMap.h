@@ -11,6 +11,7 @@ public:
     void Load(const std::string& file);
     void SetTileSet(TileSet* tileSet);
     int& At(int x, int y, int z = 0);
+    int At(int x, int y, int z = 0) const;
     void Render();
     void NotifyCollision(GameObject& other);
     void Start();
@@ -19,6 +20,7 @@ public:
     int GetWidth();
     int GetHeight();
     int GetDepth(); 
+    bool IsBlocked(const Rect& box) const;
 private:
     std::vector<int> tileMatrix;
     std::unique_ptr<TileSet> tileSet;

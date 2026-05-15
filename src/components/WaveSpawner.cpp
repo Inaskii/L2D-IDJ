@@ -35,8 +35,8 @@ void WaveSpawner::Update (float dt){
       const float spawnDistance = 200.0f;
       Vec2 spawnPos = Camera::pos + Vec2(cos(angle), sin(angle)) * spawnDistance;
 
-      if ((rand() % 10) == 0) Game::GetInstance().GetState().SpawnNPC(spawnPos.x,spawnPos.y);
-      else Game::GetInstance().GetState().SpawnZombie(spawnPos.x,spawnPos.y);
+      if ((rand() % 10) == 0) Game::GetInstance().GetCurrentState().SpawnNPC(spawnPos.x,spawnPos.y);
+      else Game::GetInstance().GetCurrentState().SpawnZombie(spawnPos.x,spawnPos.y);
 
       zombieCounter++;
       zombieCooldownTimer.Restart();

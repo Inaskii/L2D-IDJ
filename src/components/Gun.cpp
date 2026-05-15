@@ -135,7 +135,7 @@ bool Gun::Shoot(Vec2 target){
     bulletGO->box.x = gunPos.x;
     bulletGO->box.y = gunPos.y;
     bulletGO->AddComponent(new Bullet(*bulletGO, angle, 800.0f, 10, 600.0f,targetsPlayer));
-    Game::GetInstance().GetState().AddObject(std::shared_ptr<GameObject>(bulletGO));
+    Game::GetInstance().GetCurrentState().AddObject(std::shared_ptr<GameObject>(bulletGO));
     shotSound.Play();
     cdTimer.Restart();
   }

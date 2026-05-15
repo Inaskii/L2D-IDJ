@@ -1,145 +1,80 @@
 #include "../include/State.h"
-#include "../include/Sprite.h"
-#include "../include/Music.h"
 #include "../include/GameObject.h"
-#include "../include/TileSet.h"
-#include "../include/TileMap.h"
-#include "../include/InputManager.h"
-#include "../include/PlayerController.h"
-#include "../include/SpriteRenderer.h"
-#include "../include/Character.h"
-#include "../include/Collider.h"
-#include "../include/Collision.h"
 #include "../include/Npc.h"
-#include "../include/WaveSpawner.h"
-#include "../include/AIController.h"
-#define INCLUDE_SDL
+#include "../include/Zombie.h"
 
 State::State()
-  : sprite(),
-    music(),
-    started(false),
-    quitRequested(false)
-{
-  
+  : popRequested(false),
+    quitRequested(false),
+    started(false){
 }
-State::~State()
-{
+
+State::~State(){
   objectArray.clear();
 }
 
-void State::Start()
-{
-  LoadAssets();
-  for(int i =0;i <objectArray.size()/*pegar size toda iteração pois ele vai alterando*/;i++)
-  {
-    
+void State::StartArray(){
+  for (size_t i = 0; i < objectArray.size(); i++){
     objectArray[i]->Start();
   }
-
-
 
   started = true;
 }
 
-void State::LoadAssets()
-{
-  std::cout<<"LoaAssets start\n";
-  GameObject* world = new GameObject();
-
-  sprite.Open("Background.png");
-  sprite.setFrame(0);
-  sprite.cameraFollower = 1;
-
-  TileSet* tileSet = new TileSet(64,64,"Tileset.png");
-  TileMap* tileMap = new TileMap(*world,"assets/map/map.txt",tileSet);
-  
-  world->AddComponent(tileMap); 
-  world->box.x = 0; world->box.y = 0;
-  AddObject(std::shared_ptr<GameObject>(world));
-
-  GameObject* characterGO = new GameObject();
-  characterGO->box.x = 1280;
-  characterGO->box.y = 1280;
-
-  AddObject(std::shared_ptr<GameObject>(characterGO));
-
-  PlayerController* playerController = new PlayerController(*characterGO);
-  Character* character = new Character(*characterGO, "Player.png");
-  characterGO->AddComponent(character);
-  characterGO->AddComponent(playerController);
-  Camera::Follow(characterGO);
-
-  GameObject* npcGO = new GameObject();
-  npcGO->box.x = 1500;
-  npcGO->box.y = 1280;
-  npcGO->AddComponent(new Npc(*npcGO));
-  AddObject(std::shared_ptr<GameObject>(npcGO));
-
-  GameObject* waveSpawnerGO = new GameObject();
-  waveSpawnerGO->AddComponent(new WaveSpawner(*waveSpawnerGO));
-  AddObject(std::shared_ptr<GameObject>(waveSpawnerGO));
-
-
-
-  std::cout<<"LoaAssets end\n";
-}
-
-
-bool State::QuitRequested()
-{
-  return quitRequested;
-}
-void State::Update(float dt){
-  Camera::Update(dt);
-
-
-  if (InputManager::GetInstance().QuitRequested() || InputManager::GetInstance().KeyPress(ESCAPE_KEY)) {
-    quitRequested = true;
-  }
-
-  if (InputManager::GetInstance().KeyPress(SPACE_KEY)) {
-    SpawnZombie(InputManager::GetInstance().GetMouseX(), InputManager::GetInstance().GetMouseY());
-  }
-
+void State::UpdateArray(float dt){
   const size_t objectCount = objectArray.size();
-  for (size_t i = 0; i < objectCount; i++)
-  {
+  for (size_t i = 0; i < objectCount; i++){
     objectArray[i]->Update(dt);
   }
-  for(int i =0;i<objectArray.size();i++)
-  {
-    if(objectArray[i]->IsDead())
-    {
-      objectArray.erase(objectArray.begin()+i);
-      i--;
+
+  for (auto it = objectArray.begin(); it != objectArray.end();){
+    if ((*it)->IsDead()) {
+      it = objectArray.erase(it);
+    } else {
+      it++;
     }
-  }//o(n^2), existem otimizações para isso
-  for(int i =0;i<objectArray.size();i++)
-  {
-    auto objA = objectArray[i]; 
-    auto a = objA->GetComponent<Collider>();
-    if (!a) continue;
-      for(int j =i+1;j<objectArray.size();j++)
-      {
-        auto objB = objectArray[j]; 
-        auto b = objB->GetComponent<Collider>();
-        if (!b) continue;
-        if(Collision::IsColliding(a->box,b->box,objA->rotation,objB->rotation))
-        {
-          objA->NotifyCollision(*objB);
-          objB->NotifyCollision(*objA);
-          // std::cout<<"Collision\n";
-        }
-    
-      }
   }
 }
 
-void State::SpawnZombie(int x, int y)
-{
-  GameObject* zombieGO = new GameObject();
+void State::RenderArray(){
+  for (const std::shared_ptr<GameObject>& gameObject : objectArray){
+    gameObject->Render();
+  }
+}
 
+bool State::PopRequested(){
+  return popRequested;
+}
+
+bool State::QuitRequested(){return quitRequested;}
+
+std::weak_ptr<GameObject> State::AddObject(std::shared_ptr<GameObject> go){
+  objectArray.emplace_back(go);
+  if (started) {
+    go->Start();
+  }
+  return std::weak_ptr<GameObject>(go);
+}
+
+std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
+  std::weak_ptr<GameObject> ret;
+  for (std::shared_ptr<GameObject>& obj : objectArray) {
+    if (obj.get() == go) {
+      ret = std::weak_ptr<GameObject>(obj);
+      break;
+    }
+  }
+  return ret;
+}
+
+bool State::IsTileBlocked(const Rect& box) const
+{
+  (void)box;
+  return false;
+}
+
+void State::SpawnZombie(int x, int y){
+  GameObject* zombieGO = new GameObject();
   zombieGO->box.x = x;
   zombieGO->box.y = y;
 
@@ -148,8 +83,8 @@ void State::SpawnZombie(int x, int y)
 
   AddObject(std::shared_ptr<GameObject>(zombieGO));
 }
-void State::SpawnNPC(int x, int y)
-{
+
+void State::SpawnNPC(int x, int y){
   GameObject* npcGO = new GameObject();
   npcGO->box.x = x;
   npcGO->box.y = y;
@@ -157,38 +92,3 @@ void State::SpawnNPC(int x, int y)
 
   AddObject(std::shared_ptr<GameObject>(npcGO));
 }
-
-void State::Render()
-{
-  SDL_Renderer* renderer = Game::GetInstance().GetRenderer();
-  if (renderer == nullptr) {
-    return;
-  }
-
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(renderer);
-  sprite.Render(0, 0, sprite.GetWidth(), sprite.GetHeigth());
-
-  for (const std::shared_ptr<GameObject>& gameObject : objectArray)
-  {
-    gameObject->Render();
-  }
-
-  SDL_RenderPresent(renderer);
-}
-  std::weak_ptr<GameObject> State::AddObject(std::shared_ptr<GameObject> go){
-
-    objectArray.emplace_back(go);
-    if(started) go->Start();
-    return std::weak_ptr<GameObject>(go);
-  
-  }
-  std::weak_ptr<GameObject> State::GetObjectPtr(GameObject* go){
-    std::weak_ptr<GameObject> ret;
-    for(std::shared_ptr<GameObject> &obj: objectArray){
-      if(obj.get() == go){
-        ret = std::weak_ptr<GameObject>(obj);
-      }
-    }
-    return ret;
-  }

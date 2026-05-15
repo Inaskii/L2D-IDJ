@@ -45,12 +45,12 @@ Character::~Character (){
 void Character::Start(){
   associated.GetComponent<Animator>()->SetAnimation("idle");
   
-  auto ts = Game::GetInstance().GetState().GetObjectPtr(&associated);
+  auto ts = Game::GetInstance().GetCurrentState().GetObjectPtr(&associated);
   player = this;
   
   auto gunGO = std::make_shared<GameObject>();
   gunGO->AddComponent(new Gun(*gunGO,ts));
-  gun = Game::GetInstance().GetState().AddObject(gunGO);
+  gun = Game::GetInstance().GetCurrentState().AddObject(gunGO);
 
 }
 
@@ -135,8 +135,21 @@ void Character::Update (float dt){
     
   }
   if(speed == Vec2{0,0}) animator->SetAnimation("idle"); 
-  this->associated.box.x+=speed.x;
-  this->associated.box.y+=speed.y;
+  Rect previousBox = this->associated.box;
+
+  this->associated.box.x += speed.x;
+  if (Game::GetInstance().GetCurrentState().IsTileBlocked(this->associated.box)) {
+    this->associated.box.x = previousBox.x;
+  }
+
+  this->associated.box.y += speed.y;
+  if (Game::GetInstance().GetCurrentState().IsTileBlocked(this->associated.box)) {
+    this->associated.box.y = previousBox.y;
+  }
+
+  if (Collider* collider = associated.GetComponent<Collider>()) {
+    collider->Update(0);
+  }
 
   hitTimer.Update(dt);
   if (hit && hitTimer.Get() > 0.25f) {
@@ -147,7 +160,7 @@ void Character::Update (float dt){
 void Character::Render (){}
 void Character::NotifyCollision(GameObject& other){
   Zombie* zombie = other.GetComponent<Zombie>();
-  if (zombie == nullptr) {
+  if (zombie == nullptr || zombie->IsDead()) {
     return;
   }
 
